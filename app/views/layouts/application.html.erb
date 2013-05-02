@@ -3,6 +3,7 @@
 <head>
   <title>Mapper</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag    "gmaps4rails", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
@@ -11,4 +12,10 @@
 <%= yield %>
 
 </body>
+
+
+<!-- This container will include the js files from map providers,
+the custom js to display the map, the gem’s js code -->
+<%= yield :scripts %>
+
 </html>
