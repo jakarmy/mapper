@@ -43,6 +43,7 @@ GEM
     excon (0.16.10)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    gmaps4rails (1.5.6)
     heroku (2.35.0)
       heroku-api (~> 0.3.7)
       launchy (>= 0.3.2)
@@ -135,6 +136,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
   execjs
+  gmaps4rails
   heroku
   jquery-rails
   less-rails

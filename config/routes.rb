@@ -1,5 +1,7 @@
 Mapper::Application.routes.draw do
-  root :to => "users#index"
+  resources :places
+
+  root :to => 'places#index'
   
   match '/login' =>  "login#index", :as => :login
   match '/logger' => "login#login"

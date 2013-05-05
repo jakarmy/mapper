@@ -47,8 +47,8 @@
           <a class="brand" href="#">Mapper</a>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <li><%= link_to "Users", "/users"  %></li>
+              <li><%= link_to "Places", "/places"  %></li>
               <li><%= link_to "Logout", "/logout"  %></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -86,4 +86,7 @@
     <%= javascript_include_tag "application" %>
 
   </body>
+  <!-- This container will include the js files from map providers,
+the custom js to display the map, the gem’s js code -->
+<%= yield :scripts %>
 </html>
