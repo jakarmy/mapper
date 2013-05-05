@@ -1,5 +1,5 @@
 class Place < ActiveRecord::Base
-  attr_accessible :address, :gmaps, :latitude, :longitude, :name
+  attr_accessible :address, :gmaps, :latitude, :longitude, :name, :image
 
   acts_as_gmappable
 

@@ -6,7 +6,7 @@ class PlacesController < ApplicationController
 
     @json = Place.all.to_gmaps4rails do |place, marker|
       marker.title   place.name
-      marker.infowindow "<h2>#{place.name}</h2><body>#{place.address}</body>"
+      marker.infowindow "<img src='#{place.image}'><h2>#{place.name}</h2><body>#{place.address}</body>"
       marker.sidebar "<span>#{place.name}</span>"
       marker.json({ :id => place.id})
     end
