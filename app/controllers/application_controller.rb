@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
 
-  before_filter :check_token
+  before_filter :check_token, except: [:new] 
 
   protected
 
