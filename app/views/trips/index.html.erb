@@ -1,0 +1,13 @@
+<h1>Your Trips</h1>
+
+<table>
+<% @trips.each do |trip| %>
+  <tr>
+    <td><%= link_to trip.name, trip %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Trip', new_trip_path %>
