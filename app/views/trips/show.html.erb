@@ -1,4 +1,4 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'New Place', new_place_path, :trip => @trip %>
+<%= link_to 'New Place', new_trip_place_path(@trip) %>
 <%= gmaps4rails(@json) %>

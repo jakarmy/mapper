@@ -32,9 +32,7 @@ class PlacesController < ApplicationController
   # GET /places/new.json
   def new
     @place = Place.new
-    #We have to determine HOW we'll know WHICH trip we should go back to!!
-    @place.trips << params[:trip]
-
+    @trip = Trip.find(params[:trip_id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @place }
@@ -50,16 +48,17 @@ class PlacesController < ApplicationController
   # POST /places.json
   def create
     @place = Place.new(params[:place])
-
+    trip = Trip.find(params[:trip])
+    trip.places << @place
     respond_to do |format|
       if @place.save
         #format.html { redirect_to @place, notice: 'Place was successfully created.' }
         #We have to determine HOW we'll know WHICH trip we should go back to!!
-        format.html { redirect_to @place.trips.last, notice: 'Place was successfully created.' }
+        format.html { redirect_to trip, notice: 'Place was successfully created.' }
         format.json { render json: @place, status: :created, location: @place }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @place.errors, status: :unprocessable_entity }
+    #  else
+     #   format.html { render action: "new" }
+      #  format.json { render json: @place.errors, status: :unprocessable_entity }
       end
     end
   end

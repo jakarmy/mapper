@@ -6,12 +6,13 @@ Mapper::Application.routes.draw do
   match '/logger' => "login#login"
   match '/logout' => "login#logout"
 
-  match 'trips/add_place' =>  "trips#add_place", :as => :add_place
-  match '/places' =>  "places#new", :as => :new_place
   
   resources :users
   resources :places
-  resources :trips
+  resources :trips do 
+    resources :places
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
