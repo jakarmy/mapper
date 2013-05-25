@@ -49,6 +49,7 @@ class PlacesController < ApplicationController
   def create
     @place = Place.new(params[:place])
     trip = Trip.find(params[:trip])
+    if (@logged_user.trips.include? trip) 
     trip.places << @place
     respond_to do |format|
       if @place.save
@@ -61,6 +62,10 @@ class PlacesController < ApplicationController
       #  format.json { render json: @place.errors, status: :unprocessable_entity }
       end
     end
+  else
+    redirect_to login_path
+  end
+
   end
 
   # PUT /places/1
