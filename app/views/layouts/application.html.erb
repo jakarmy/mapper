@@ -61,7 +61,16 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
+              <li class="nav-header"> 
+                <% title = "Hey There!\n" %>
+                <%  
+                    if(!@logged_user.nil?)
+                      title += @logged_user.name 
+                    end
+                %>
+
+                <%= title %>
+              </li> 
               <li><%= link_to "Sign Up", "/users/new"  %></li>
               <li><%= link_to "Link2", "/path2"  %></li>
               <li><%= link_to "Link3", "/path3"  %></li>
