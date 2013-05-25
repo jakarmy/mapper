@@ -1,6 +1,6 @@
 Mapper::Application.routes.draw do
 
-  root :to => 'trips#index'
+  root :to => 'index#index'
   
   match '/login' =>  "login#index", :as => :login
   match '/logger' => "login#login"

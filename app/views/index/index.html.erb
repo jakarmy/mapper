@@ -1,0 +1,15 @@
+<h1>Welcome</h1>
+<h2>Here are the recommended trips for you</h2>
+
+<table>
+<% @trips.each do |recommended_trip| %>
+  <tr>
+    <td><%= link_to recommended_trip.name, recommended_trip %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Trip', new_trip_path %>
+<%= link_to 'My Trips', trip_path %>
