@@ -55,7 +55,6 @@ class TripsController < ApplicationController
 
     respond_to do |format|
       if @trip.save
-        @trip.created_at = Time.now
         @logged_user.trips << @trip
         format.html { redirect_to @trip, notice: 'Trip was successfully created.' }
         format.json { render json: @trip, status: :created, location: @trip }
@@ -102,5 +101,28 @@ class TripsController < ApplicationController
       format.json { render json: @trip }
     end
   end
+
+  def invite
+    trip = Trip.find(params[:trip])
+    email = params[:email]
+    invitee = User.where("email = ?", email).first
+    success = false
+    if(invitee.nil?)
+      success = false
+    else
+      invitee.trips << trip
+      success = true
+    end
+    respond_to do |format|
+      if success
+        format.html { redirect_to trip, notice: 'User was invited!' }
+        format.json { render json: trip }
+      else
+        format.html { redirect_to trip, notice: 'User does not have an account in Mapper, invite them!' }
+        format.json { render json: trip }
+      end
+    end
+  end
+
 
 end
