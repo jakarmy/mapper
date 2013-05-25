@@ -1,13 +1,14 @@
 <h1>Your Trips</h1>
 
-<table>
+<%= link_to 'New Trip', new_trip_path %> <br />
+
+<ul class="thumbnails">
 <% @trips.each do |trip| %>
-  <tr>
-    <td><%= link_to trip.name, trip %></td>
-  </tr>
+  <li class="span10">
+    <div class="thumbnail" id="recommended" style="background-image: url(<%= trip.cover_image_url %>);">
+      <h3><%= link_to trip.name, trip %></h3>
+      <h4>People: <%= trip.users.count %></h4>
+    </div>
+  </li>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Trip', new_trip_path %>
+</ul>
