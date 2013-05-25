@@ -25,10 +25,8 @@ ActiveRecord::Schema.define(:version => 20130525165308) do
   end
 
   create_table "places_trips", :id => false, :force => true do |t|
-    t.integer  "place_id"
-    t.integer  "trip_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "place_id"
+    t.integer "trip_id"
   end
 
   create_table "trips", :force => true do |t|
@@ -39,10 +37,8 @@ ActiveRecord::Schema.define(:version => 20130525165308) do
   end
 
   create_table "trips_users", :id => false, :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "trip_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "user_id"
+    t.integer "trip_id"
   end
 
   create_table "users", :force => true do |t|
