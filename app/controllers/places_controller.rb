@@ -63,7 +63,7 @@ class PlacesController < ApplicationController
       end
     end
   else
-    redirect_to login_path
+    redirect_to logout_path
   end
 
   end
