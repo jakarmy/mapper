@@ -2,6 +2,7 @@ require 'securerandom'
 
 class User < ActiveRecord::Base
   attr_accessible :admin, :deleted, :email, :hash_password, :lastname, :name, :salt, :profile, :token
+  has_and_belongs_to_many :trips
 
 	#has_many :dataFiles, :primary_key => :email, :foreign_key => :owner, :dependent => :destroy
 	before_create :generate_password

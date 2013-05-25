@@ -32,6 +32,8 @@ class PlacesController < ApplicationController
   # GET /places/new.json
   def new
     @place = Place.new
+    #We have to determine HOW we'll know WHICH trip we should go back to!!
+    @place.trips << params[:trip]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -51,7 +53,9 @@ class PlacesController < ApplicationController
 
     respond_to do |format|
       if @place.save
-        format.html { redirect_to @place, notice: 'Place was successfully created.' }
+        #format.html { redirect_to @place, notice: 'Place was successfully created.' }
+        #We have to determine HOW we'll know WHICH trip we should go back to!!
+        format.html { redirect_to @place.trips.last, notice: 'Place was successfully created.' }
         format.json { render json: @place, status: :created, location: @place }
       else
         format.html { render action: "new" }
