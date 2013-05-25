@@ -1,6 +1,15 @@
-<p id="notice"><%= notice %></p>
-
+<% 
+if (@logged_user.trips.include? @trip) 
+	has_map = true
+else
+	has_map = false
+end
+%>
+<% if has_map %>
 <%= link_to 'New Place', new_trip_place_path(@trip) %>
+<% end %>
 <%= gmaps4rails(@json) %>
 
+<% if has_map %>
 <%= render 'invite' %>
+<% end %>

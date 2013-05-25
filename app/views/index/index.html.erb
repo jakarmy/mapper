@@ -12,8 +12,9 @@
 <% end %>
 </ul>
 
+<% if @logged_user %>
 <br />
-
 <%= link_to 'New Trip', new_trip_path %>
 <br />
 <%= link_to 'My Trips', trips_path %>
+<% end %>
