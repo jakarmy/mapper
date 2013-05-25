@@ -1,18 +1,10 @@
 class TripsController < ApplicationController
+  helper :application
   # GET /trips
   # GET /trips.json
   def index
-    
-    #If the user doesn't exist, then we redirect to index
-    unless user = getCurrentUser
-        respond_to do |format|
-           format.html { redirect_to :root, :notice => "Tienes que haber iniciado sesion!" }
-           format.json { render :json => {:ok => false, :notice => "Tienes que haber iniciado sesion!"} }
-         end
-        return
-      end
-    
-    @trips = user.trips
+       
+    @trips = @logged_user.trips
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,14 +15,6 @@ class TripsController < ApplicationController
   # GET /trips/1
   # GET /trips/1.json
   def show
-
-    unless user = getCurrentUser
-        respond_to do |format|
-           format.html { redirect_to :root, :notice => "Tienes que haber iniciado sesion!" }
-           format.json { render :json => {:ok => false, :notice => "Tienes que haber iniciado sesion!"} }
-         end
-        return
-    end
 
     @trip = Trip.find(params[:id])
     @places = @trip.places
@@ -108,14 +92,6 @@ class TripsController < ApplicationController
     end
   end
   def add_place
-
-    unless user = getCurrentUser
-        respond_to do |format|
-           format.html { redirect_to :root, :notice => "Tienes que haber iniciado sesion!" }
-           format.json { render :json => {:ok => false, :notice => "Tienes que haber iniciado sesion!"} }
-         end
-        return
-    end
 
     @trip = Trip.find(params[:id])
 
