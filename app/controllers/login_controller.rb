@@ -35,6 +35,6 @@ def login
 
 def logout
     session[:token] = nil
-    redirect_to :login, notice: 'Logged out.'
+    redirect_to root_path, notice: 'Logged out.'
 end
 end

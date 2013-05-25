@@ -4,13 +4,10 @@ class UsersController < ApplicationController
 skip_before_filter :check_token, only: [:new, :create]
 
   def index
-    @users = User.all
-
-    logged_user = User.find_by_token(session[:token])
-
+    @user = @logged_user
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
+      format.html # show.html.erb
+      format.json { render json: @user }
     end
   end
 

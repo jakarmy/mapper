@@ -47,14 +47,12 @@
           <a class="brand" href="#">Mapper</a>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Users", "/users"  %></li>
-              <li><%= link_to "Trips", "/trips"  %></li>
-              <li><%= link_to "Logout", "/logout"  %></li>
               <% if @logged_user %>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                  <li><%= link_to user_path, 'My Profile' %></li>
-                  <li><%= link_to trips_path, 'My Trips' %></li>
-                </ul>
+              <li><%= link_to 'Profile', users_path  %></li>
+              <li><%= link_to 'My Trips', trips_path  %></li>
+              <li><%= link_to 'Logout', logout_path  %></li>
+              <% else %>
+              <li><%= link_to 'Login', login_path  %></li>
               <% end %>
             </ul>
           </div><!--/.nav-collapse -->
