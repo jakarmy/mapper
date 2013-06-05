@@ -6,7 +6,7 @@
 <% @trips.each do |trip| %>
   <li class="span10">
     <div class="thumbnail" id="recommended" style="background-image: url(<%= trip.cover_image_url %>);">
-      <h3><%= link_to trip.name, trip %></h3>
+      <h3><%= link_to trip.name, trip, {:style => 'color:white'} %></h3>
       <h4>People: <%= trip.users.count %></h4>
     </div>
   </li>

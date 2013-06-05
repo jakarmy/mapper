@@ -20,7 +20,7 @@ pre {
 
 a {
   color: #000;
-  &:visited {
+  &:visited { //This property is overriding all other link_to calls
     color: #666;
   }
   &:hover {
