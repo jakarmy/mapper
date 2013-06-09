@@ -1,14 +1,5 @@
 <h1>Your Trips</h1>
 
-<%= link_to 'New Trip', new_trip_path %> <br />
+<%= link_to 'New Trip', new_trip_path, :id => "new_trip" %> <br />
 
-<ul class="thumbnails">
-<% @trips.each do |trip| %>
-  <li class="span10">
-    <div class="thumbnail" id="recommended" style="background-image: url(<%= trip.cover_image_url %>);">
-      <h3><%= link_to trip.name, trip, {:style => 'color:white'} %></h3>
-      <h4>People: <%= trip.users.count %></h4>
-    </div>
-  </li>
-<% end %>
-</ul>
+<%= render "layouts/trip_partial" %>

@@ -1,22 +1,8 @@
-<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/base-min.css">
 
 <h1>Welcome</h1>
 <h2>Here are the recommended trips for you</h2>
 
-<div class="pure-g-r thumbnails">
-	<% @trips.each do |recommended_trip| %>
-	 <!--id = "recommended" -->
-	  <!--style="background-image: url(<%= recommended_trip.cover_image_url %>);" -->
-		<div class="pure-u-1-2 thumbnail photo-box" id = "recommended">
-            <%= link_to image_tag(recommended_trip.cover_image_url) %>
-            <aside class="photo-box-caption">
-      			<h3><%= link_to recommended_trip.name, recommended_trip %></h3>
-      			<h3>People: <%= recommended_trip.users.count %></h3>
-      		</aside>
-		</div>
-		<br />
-	<% end %>
-</div>
+<%= render "layouts/trip_partial" %>
 
 <% if @logged_user %>
 <br />
