@@ -1,16 +1,8 @@
+
 <h1>Welcome</h1>
 <h2>Here are the recommended trips for you</h2>
 
-<ul class="thumbnails">
-<% @trips.each do |recommended_trip| %>
-  <li class="span10">
-    <div class="thumbnail" id="recommended" style="background-image: url(<%= recommended_trip.cover_image_url %>);">
-      <h3><%= link_to recommended_trip.name, recommended_trip %></h3>
-      <h4>People: <%= recommended_trip.users.count %></h4>
-    </div>
-  </li>
-<% end %>
-</ul>
+<%= render "layouts/trip_partial" %>
 
 <% if @logged_user %>
 <br />

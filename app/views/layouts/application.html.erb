@@ -48,9 +48,12 @@
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <% if @logged_user %>
-              <li><%= link_to 'Profile', users_path  %></li>
-              <li><%= link_to 'My Trips', trips_path  %></li>
-              <li><%= link_to 'Logout', logout_path  %></li>
+                <li><%= link_to 'Profile', users_path  %></li>
+                <li><%= link_to 'My Trips', trips_path  %></li>
+                <li><%= link_to 'Logout', logout_path  %></li>
+              <% else %>
+                <li><%= link_to "Sign Up", "/users/new"  %></li>
+                <li><%= link_to 'Login', login_path  %></li>
               <% end %>
             </ul>
           </div><!--/.nav-collapse -->
@@ -64,7 +67,7 @@
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
               <li class="nav-header"> 
-                <% title = "Hey There!\n" %>
+                <% title = "Welcome to Mapper.\n" %>
                 <%  
                     if(!@logged_user.nil?)
                       title += @logged_user.name 
@@ -73,11 +76,6 @@
 
                 <%= title %>
               </li> 
-
-              <% if @logged_user.nil? %>
-              <li><%= link_to "Sign Up", "/users/new"  %></li>
-              <li><%= link_to 'Login', login_path  %></li>
-              <% end %>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
