@@ -17,12 +17,12 @@ min_latitude = -55
 # -180-180
 
 max_longitude = -66
-min_longitude = -76
+min_longitude = -71
 # -90-90
 
 step = 1
 
-current_latitude = min_latitude
+current_latitude = -33
 current_longitude = min_longitude
 
 ll = ll1+str(current_latitude)+","+str(current_longitude)
@@ -30,7 +30,6 @@ radius1 = radius+"110000"
 f1=open('./datafile.rb', 'w+')
 
 while current_longitude <= max_longitude:
-	current_latitude = min_latitude
 	while current_latitude <= max_latitude:
 
 		#add code here#########################################
@@ -57,7 +56,7 @@ while current_longitude <= max_longitude:
 							if int(image_response_json['response']['photos']['count']) > 0:
 								for item in image_response_json['response']['photos']['items']:
 									image_url = item['prefix'] + IMAGE_SIZE + item['suffix']
-									f1.write( 'a.images << Image.new( url: "'+image_url+'") ')
+									f1.write( 'a.images << Image.new( url: "'+image_url+'")\n')
 						f1.write( 'a.save\n' )
 								
 						
@@ -66,4 +65,5 @@ while current_longitude <= max_longitude:
 		ll = ll1+str(current_latitude)+","+str(current_longitude)
 	current_longitude = current_longitude+step
 	ll = ll1+str(current_latitude)+","+str(current_longitude)
+	current_latitude = min_latitude
 

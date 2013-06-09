@@ -9,21 +9,19 @@
 
 	  <!-- We obtain the images from the trip we need -->
 	  <% images =  Array.new %>
-	  <% recommended_trip.places.each |place| %>
-	  	 <% images << place.images %>
+	  <% recommended_trip.places.each do |place| %>
+	  	  <% images << place.images %>
 	  <% end %>
 		<div class="pure-u-1 thumbnail photo-box" id = "recommended">
 			<div class="pure-g-r">
 				 <!-- We just chose 3 as the limit for the images to display -->
-					<div class= "pure-u-1-3 thumbnail photo-box">
-						<%= link_to image_tag(images.first.url), recommended_trip %>
-					</div>
-					<div class= "pure-u-1-3 thumbnail photo-box">
-						<%= link_to image_tag(images.second.url), recommended_trip %>
-					</div>
-					<div class= "pure-u-1-3 thumbnail photo-box">
-						<%= link_to image_tag(images.third.url), recommended_trip %>
-					</div>
+				 <% images.each do |image_array| %>
+				 	<% image_array.each do |image| %>
+						<div class= "pure-u-1-3 thumbnail photo-box">
+							<%= link_to image_tag(image.url), recommended_trip %>
+						</div>
+					<% end %>
+				 <% end %>
 			</div>
             <!--<%= link_to image_tag(recommended_trip.cover_image_url), recommended_trip %> --> 
             <aside class="photo-box-caption">
