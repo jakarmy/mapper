@@ -1,8 +1,0 @@
-Place.create(name: 'Restaurante e Pizzaria La Nonna', longitude: '-50.413125', latitude: '-65.488453')
-Place.create(name: 'Pedrinho Cabeleireiro', longitude: '-49.8739585876', latitude: '-67.0169906616')
-Place.create(name: 'Restaurante e Pizzaria La Nonna', longitude: '-50.413125', latitude: '-65.488453')
-Place.create(name: 'Taco el pancho', longitude: '-49.2971572876', latitude: '-64.5558853149')
-Place.create(name: 'Rodovia Terraplenagem', longitude: '-49.3153533936', latitude: '-64.548789978')
-Place.create(name: 'Shopping crystal', address: 'Com. Araujo,731', longitude: '-49.2817601673', latitude: '-64.561315938')
-Place.create(name: 'McDonald's Shopping Mueller', longitude: '-49.2703819275', latitude: '-64.5770645142')
-Place.create(name: 'Centenario/campo comprido', longitude: '-49.2687064961', latitude: '-64.5604276527')

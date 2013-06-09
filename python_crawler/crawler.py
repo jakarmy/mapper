@@ -24,7 +24,7 @@ current_longitude = min_longitude
 
 ll = ll1+str(current_latitude)+","+str(current_longitude)
 radius1 = radius+"110000"
-f1=open('./datafile', 'w+')
+f1=open('./datafile.rb', 'w+')
 
 while current_longitude <= max_longitude:
 	current_latitude = min_latitude
@@ -34,18 +34,19 @@ while current_longitude <= max_longitude:
 		print (URL + client_id +"&"+ client_secret +"&" +v+"&"+radius1+"&"+ ll)
 		four_response = urllib.urlopen(URL + client_id +"&"+ client_secret +"&" +v+"&"+radius1+"&"+ ll)
 		jsonResponse = json.loads(four_response.read())
-		if int(jsonResponse['numResults'])>0:
-			for group in jsonResponse['response']['groups']:
-				for item in group['items']:
-					try:
-						name = item['venue']['name'].encode('utf8')
-						address = item['venue']['location']['address'].encode('utf8')
-						f1.write( "Place.create(name: '"+name+"', address: '"+address+"', longitude: '"+str(float(item['venue']['location']['lng']))+"', latitude: '"+str(float(item['venue']['location']['lat']))+"')\n")
-					except KeyError:
-						name = item['venue']['name'].encode('utf8')
-						f1.write( "Place.create(name: '"+name+"', longitude: '"+str(float(item['venue']['location']['lng']))+"', latitude: '"+str(float(item['venue']['location']['lat']))+"')\n")
-					
-		#######################################################
+		if jsonResponse.has_key('numResults'):
+			if int(jsonResponse['numResults'])>0:
+				for group in jsonResponse['response']['groups']:
+					for item in group['items']:
+						try:
+							name = item['venue']['name'].encode('utf8')
+							address = item['venue']['location']['address'].encode('utf8')
+							f1.write( 'Place.create(name: "'+name+'", address: "'+address+'", longitude: "'+str(float(item['venue']['location']['lng']))+'", latitude: "'+str(float(item['venue']['location']['lat']))+'")\n')
+						except KeyError:
+							name = item['venue']['name'].encode('utf8')
+							f1.write( 'Place.create(name: "'+name+'", longitude: "'+str(float(item['venue']['location']['lng']))+'", latitude: "'+str(float(item['venue']['location']['lat']))+'")\n')
+						
+			#######################################################
 		current_latitude = current_latitude+step
 		ll = ll1+str(current_latitude)+","+str(current_longitude)
 	current_longitude = current_longitude+step
