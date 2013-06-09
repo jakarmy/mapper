@@ -6,7 +6,12 @@
 	<% @trips.each do |recommended_trip| %>
 	 <!--id = "recommended" -->
 	  <!--style="background-image: url(<%= recommended_trip.cover_image_url %>);" -->
-		<div class="pure-u-1-2 thumbnail photo-box" id = "recommended">
+		<div class="pure-u-1 thumbnail photo-box" id = "recommended">
+			<div class="pure-g-r">
+				<div class="pure-u-1-3">
+					
+				</div>
+			</div>
             <%= link_to image_tag(recommended_trip.cover_image_url) %>
             <aside class="photo-box-caption">
       			<h3><%= link_to recommended_trip.name, recommended_trip %></h3>
