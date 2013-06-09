@@ -1,3 +1,5 @@
+User.create(email: 'luke@rebels.com', name:'Luke', lastname:'Skywalker', hash_password: '123456');
+
 Place.create(name: 'isla guarello', longitude: '-75.3403785393', latitude: '-50.3648738544')
 Place.create(name: 'isla guarello', longitude: '-75.3403785393', latitude: '-50.3648738544')
 Place.create(name: 'A La Chucha', longitude: '-75.865219', latitude: '-33.819991')
