@@ -29,7 +29,6 @@ class IndexController < ApplicationController
 
 	def index
 		@trips = getRecomendedTrips
-
 	    respond_to do |format|
 	      format.html # index.html.erb
 	      format.json { render json: @trips }
