@@ -81,4 +81,34 @@ skip_before_filter :check_token, only: [:new, :create]
       format.json { head :no_content }
     end
   end
+
+  def match(value)
+    @nil_return = Array.new
+    @nil_return[:error] = "no results"
+    if !value.nil?
+
+      if value.split.count>1
+        @Users = User.find(:all, :conditions => ['name LIKE ? AND lastname LIKE ? ','%'value.split[0]'%','%'value.split[1]'%'], :limit => 10)
+
+      else
+        @Users = User.find(:all, :conditions => ['email LIKE ? ', '%'+@term+'%'],:limit => 10)
+        if @Users.count < 10
+          @Users << User.find(:all, :conditions => ['name LIKE ? ', '%'+@term+'%'],:limit => 10)
+          if @Users.count < 10
+            @Users << User.find(:all, :conditions => ['lastname LIKE ? ', '%'+@term+'%'],:limit => 10)
+          end
+        end
+      end
+
+    end
+    respond_to do |format|
+      if @user.nil? || @user.count == 0
+        format.json { render json: @nil_return }
+      else
+        format.json { render json: @Users }
+      end
+    end
+
+    
+  end
 end
