@@ -86,17 +86,28 @@ skip_before_filter :check_token, only: [:new, :create]
     value = params[:name]
     @nil_return = Hash.new
     @nil_return[:error] = "no results"
+
+    @Users = Array.new
+
     if !value.nil?
 
       if value.split.count>1
-        @Users = User.find(:all, :conditions => ['name LIKE ? AND lastname LIKE ? ','%'+value.split[0]+'%','%'+value.split[1]+'%'], :limit => 10)
+        User.find(:all, :conditions => ['name LIKE ? AND lastname LIKE ? ','%'+value.split[0]+'%','%'+value.split[1]+'%'], :limit => 10).each do |u|
+          @Users << u
+        end
 
       else
-        @Users = User.find(:all, :conditions => ['email LIKE ? ', '%'+value+'%'],:limit => 10)
+        User.find(:all, :conditions => ['email LIKE ? ', value+'%'],:limit => 10).each do |u|
+          @Users << u
+        end
         if @Users.count < 10
-          @Users << User.find(:all, :conditions => ['name LIKE ? ', '%'+value+'%'],:limit => 10)
+          User.find(:all, :conditions => ['name LIKE ? ', value+'%'],:limit => 10).each do |u|
+          @Users << u
+        end
           if @Users.count < 10
-            @Users << User.find(:all, :conditions => ['lastname LIKE ? ', '%'+value+'%'],:limit => 10)
+            User.find(:all, :conditions => ['lastname LIKE ? ', value+'%'],:limit => 10).each do |u|
+          @Users << u
+        end
           end
         end
       end
@@ -105,7 +116,7 @@ skip_before_filter :check_token, only: [:new, :create]
     respond_to do |format|
       format.json { 
         resp = Hash.new
-        resp[:html] = render_to_string(:partial => 'suggested_users', :layout => false, :locals => {:users => @Users}, :formats => [:html])
+        resp[:html] = render_to_string(:partial => 'suggested_users.html.erb', :layout => false, :locals => {:users => @Users}, :formats => [:html])
         puts resp
         render :json => resp
       }
