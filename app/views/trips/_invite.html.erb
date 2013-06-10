@@ -2,7 +2,7 @@
 	
 
   <%= label_tag(:email, "Add Users") %>
-  <%= text_field_tag(:email), :data => {:provide => "typeahead", :autocomplete => "off"}  %>
+  <%= text_field_tag(:email)  %>
 	<ul id="invite_list">
 	</ul>
 	<%= hidden_field_tag 'trip', @trip.id %>

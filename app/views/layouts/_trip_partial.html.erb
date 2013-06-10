@@ -10,20 +10,20 @@
 	  <% recommended_trip.places.each do |place| %>
 	  	  <% images << place.images %>
 	  <% end %>
+	  <% shown_images = images.sample.sample(3) %>
 		<div class="pure-u-1 thumbnail photo-box" id = "recommended">
+		<% if shown_images.count > 0%>
 			<div class="pure-g-r">
 				 <!-- We just chose 3 as the limit for the images to display -->
-				 <div class= "pure-u-1-3 thumbnail photo-box">
-						<%= link_to image_tag(images.sample.sample.url), recommended_trip %>
-				 </div>
-				 <div class= "pure-u-1-3 thumbnail photo-box">
-						<%= link_to image_tag(images.sample.sample.url), recommended_trip %>
-				 </div>
-				 <div class= "pure-u-1-3 thumbnail photo-box">
-						<%= link_to image_tag(images.sample.sample.url), recommended_trip %>
-				 </div>
+				 <% shown_images.each do |i| %>
+					 <div class= "pure-u-1-3 thumbnail photo-box">
+							<%= link_to image_tag(i.url), recommended_trip %>
+					 </div>
+				 <% end %>
 			</div>
-            <!--<%= link_to image_tag(recommended_trip.cover_image_url), recommended_trip %> --> 
+		<% else %>
+            <%= link_to image_tag(recommended_trip.cover_image_url), recommended_trip %>
+        <% end %>
             <aside class="photo-box-caption">
       			<h3><%= link_to recommended_trip.name, recommended_trip %></h3>
       			<h3>People: <%= recommended_trip.users.count %></h3>
