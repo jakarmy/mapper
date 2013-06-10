@@ -1,6 +1,10 @@
-<%= form_tag('/trips/invite', :method => 'post') do  %>
-  <%= label_tag(:email, "User Email") %>
-  <%= text_field_tag(:email) %>
+<%= form_tag('/trips/invite', :method => 'post') do  %>	
+	
+
+  <%= label_tag(:email, "Add Users") %>
+  <%= text_field_tag(:email), :data => {:provide => "typeahead", :autocomplete => "off"}  %>
+	<ul id="invite_list">
+	</ul>
 	<%= hidden_field_tag 'trip', @trip.id %>
   <div class="actions">
   	<%= submit_tag("Invite") %>

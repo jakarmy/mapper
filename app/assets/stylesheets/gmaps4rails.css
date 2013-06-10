@@ -1,3 +1,10 @@
+#mapCanvas label { width: auto; display:inline; }
+#mapCanvas img { max-width: none; }
+#map label { width: auto; display:inline; }
+#map img { max-width: none; }
+
+.reset-img-max-width img { max-width: none; }
+
 .map_container {
   padding: 6px;
   border-width: 1px;
@@ -22,3 +29,4 @@
    height: 400px;
    border:#555555 2px solid;
 }
+
