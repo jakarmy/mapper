@@ -2,9 +2,28 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@media only screen and (max-width: 480px) {
+    #recommended_small {width:000px;height:000px;}
+}
+@media only screen and (min-width: 480px) and (max-width: 768px) {
+    #recommended_small {width:000px;height:000px;}
+}
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+    #recommended_small {width:000px;height:000px;}
+}
+@media only screen and (min-width: 959px) {
+    #recommended_small {width:000px;height:000px;}
+}
+
+
 #recommended{
 	width:850px;
 	height:250px;
+}
+
+#recommended_small{
+    width:283px;
+    height:250px;
 }
 
 body {
