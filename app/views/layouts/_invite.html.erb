@@ -1,0 +1,22 @@
+</br>
+<p>Invita amigos a este viaje</p>
+
+<div id = "name_invite">
+		<%= text_field_tag 'invitation_name', nil, :placeholder => "Max Gonzalez", :size => "45" %>
+</div>
+
+<div id="invites_selected" style= "display: none;">
+		
+</div>
+
+<ul id="invite_list">
+	
+</ul>
+
+	<div id = "email_invite">
+		<p>Invita a personas por mail!</p>
+		<%= text_field_tag 'invitation_mail', nil, :placeholder => "example@hello.com, sunday@server.com", :size => "45" %>
+	</div>
+</br>
+
+<%= submit_tag "Invitar", :class => "button" %>

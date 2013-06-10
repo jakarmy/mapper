@@ -1,3 +1,4 @@
+<h2><%= @trip.name %> </h2>
 <% 
 if (@logged_user.trips.include? @trip) 
 	has_map = true
@@ -11,5 +12,7 @@ end
 <%= gmaps4rails(@json) %>
 
 <% if has_map %>
-<%= render 'invite' %>
+<%= form_tag("/trips/invite_post/#{@trip.id}", :method => "post") do -%>
+		<%= render "layouts/invite" %>
+<% end -%>
 <% end %>

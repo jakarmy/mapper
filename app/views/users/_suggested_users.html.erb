@@ -1,0 +1,7 @@
+<ul id="users_suggested_list">
+	<% @Users.each do |user| %>
+	<li class="users_suggested_row" name="<%= user.name %>" last_name="<%= user.lastname %>" user_id="<%= user.id %>">
+		<a> <%= user.name + " " + user.lastname %></a>
+	</li>
+	<% end %>
+</ul>
