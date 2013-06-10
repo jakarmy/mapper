@@ -61,25 +61,12 @@
       </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid no-space">
       <div class="row-fluid">
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header"> 
-                <% title = "Welcome to Mapper.\n" %>
-                <%  
-                    if(!@logged_user.nil?)
-                      title += @logged_user.name 
-                    end
-                %>
-
-                <%= title %>
-              </li> 
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span9">
+        <div class="span3 fill">
+          <%= render "layouts/side_partial" %>
+        </div>
+        <div class="span9 offset3">
           <%= bootstrap_flash %>
           <%= yield %>
         </div>
