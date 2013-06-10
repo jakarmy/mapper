@@ -4,8 +4,6 @@
 
 <div class="pure-g-r thumbnails">
 	<% @trips.each do |recommended_trip| %>
-	 <!--id = "recommended" -->
-	  <!--style="background-image: url(<%= recommended_trip.cover_image_url %>);" -->
 
 	  <!-- We obtain the images from the trip we need -->
 	  <% images =  Array.new %>
@@ -15,13 +13,15 @@
 		<div class="pure-u-1 thumbnail photo-box" id = "recommended">
 			<div class="pure-g-r">
 				 <!-- We just chose 3 as the limit for the images to display -->
-				 <% images.each do |image_array| %>
-				 	<% image_array.each do |image| %>
-						<div class= "pure-u-1-3 thumbnail photo-box">
-							<%= link_to image_tag(image.url), recommended_trip %>
-						</div>
-					<% end %>
-				 <% end %>
+				 <div class= "pure-u-1-3 thumbnail photo-box">
+						<%= link_to image_tag(images.sample.sample.url), recommended_trip %>
+				 </div>
+				 <div class= "pure-u-1-3 thumbnail photo-box">
+						<%= link_to image_tag(images.sample.sample.url), recommended_trip %>
+				 </div>
+				 <div class= "pure-u-1-3 thumbnail photo-box">
+						<%= link_to image_tag(images.sample.sample.url), recommended_trip %>
+				 </div>
 			</div>
             <!--<%= link_to image_tag(recommended_trip.cover_image_url), recommended_trip %> --> 
             <aside class="photo-box-caption">
