@@ -16,3 +16,13 @@ end
 		<%= render "layouts/invite" %>
 <% end -%>
 <% end %>
+
+<script>
+Gmaps.map.callback = function() {
+   google.maps.event.addListenerOnce(Gmaps.map.serviceObject, 'idle', function(){
+     	$('.gmaps4rails_map').children().append('<div class="gmnoprint" style="margin: 5px; z-index: 0; position: absolute; cursor: pointer; left: 90px; top: 10px;"><h2><%= @trip.name %> </h2></div>');
+   }
+)};
+
+
+</script>
