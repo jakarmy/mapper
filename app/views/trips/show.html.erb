@@ -12,7 +12,7 @@ end
 <%= gmaps4rails(@json) %>
 
 <% if has_map %>
-<%= form_tag("/trips/invite_post/#{@trip.id}", :method => "post") do -%>
+<%= form_tag("/trips/invite/#{@trip.id}", :method => "post") do -%>
 		<%= render "layouts/invite" %>
 <% end -%>
 <% end %>

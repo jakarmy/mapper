@@ -103,26 +103,86 @@ class TripsController < ApplicationController
   end
 
   def invite
-    trip = Trip.find(params[:trip])
-    email = params[:email]
-    invitee = User.where("email = ?", email).first
-    success = false
-    if(invitee.nil?)
-      success = false
-    else
-      invitee.trips << trip
-      success = true
+
+    @trip = Trip.find(params[:id])
+
+    @user_ids = params[:invited]
+    @users = Array.new
+    @user_ids.each do |user_id|
+      @users << User.find(user_id)
     end
-    respond_to do |format|
-      if success
-        format.html { redirect_to trip, notice: 'User was invited!' }
-        format.json { render json: trip }
-      else
-        format.html { redirect_to trip, notice: 'User does not have an account in Mapper, invite them!' }
-        format.json { render json: trip }
+    @users_mails = params[:invitation_mail].gsub(/\s+/, "").split(",")
+    
+    unless @users.count > 0 || @users_mails.size > 0
+      respond_to do |format|
+        format.html { redirect_to @trip, :notice => "No tienes permiso para acceder aqui!" }
+        format.json { render :json => {:ok => false, :notice => "No tienes permiso para acceder aqui!"} }
+      end
+      return
+    end
+    
+    if @users
+      @users.each do |user|
+        unless user.trips.include? @trip
+          user.trips << @trip
+          user.save
+        end
+          #invite = Invite.new
+#          invite.user_id = user
+#          invite.gathering_id = @gathering.id
+#          invite.creator = false
+#          invite.organizer = false
+#          invite.assist = 0
+#          invite.save
+          
+          #mail_params = {:user => User.find(user) , :gathering => @gathering}
+
+          #Emailer.event_invite_email(mail_params).deliver
+      end
+    end
+    
+    if @users_mails.size > 0
+      @users_mails.each do |mail|
+        if mail.size > 0
+          if user = User.find_by_email(mail)
+            unless user.trips.include? @trip
+              user.trips << @trip
+              user.save
+
+                            #invite = Invite.new
+#              invite.user_id = user.id
+#              invite.gathering_id = @gathering.id
+#              invite.creator = false
+#              invite.organizer = false
+#              invite.assist = 0
+#              invite.save
+
+              #mail_params = {:user => user , :gathering => @gathering}
+
+              #Emailer.event_invite_email(mail_params).deliver
+            end
+
+          else
+
+            #Send Emails!!
+            
+            #pi = PendingInvites.new
+#            pi.invite_type = 1
+#            pi.invitation_id = @gathering.id
+#            pi.usermail = mail
+#            pi.save
+            
+            #mail_params = {:user_mail => mail , :gathering => @gathering}
+
+            #Emailer.event_invite_email(mail_params).deliver
+        end
       end
     end
   end
-
+    respond_to do |format|
+      format.html { redirect_to @trip, :notice => "Has invitado con exito!" }
+      format.json
+    end
+  end
 
 end

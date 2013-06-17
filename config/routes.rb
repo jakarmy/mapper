@@ -5,7 +5,7 @@ Mapper::Application.routes.draw do
   match '/login' =>  "login#index", :as => :login
   match '/logger' => "login#login"
   match '/logout' => "login#logout"
-  match '/trips/invite' => "trips#invite"
+  match '/trips/invite/:id' => "trips#invite", :as => :invite
   match '/users/match/:name' => "users#match", :as => :match_users
   
   resources :users
