@@ -9,10 +9,63 @@ end
 <% if has_map %>
 <%= link_to 'New Place', new_trip_place_path(@trip) %>
 <% end %>
-<%= gmaps4rails(@json) %>
+
+        <div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>     
 
 <% if has_map %>
 <%= form_tag("/trips/invite/#{@trip.id}", :method => "post") do -%>
 		<%= render "layouts/invite" %>
 <% end -%>
 <% end %>
+
+<link rel="stylesheet" href="../ammap/ammap.css" type="text/css">        
+<script src="../ammap/ammap.js" type="text/javascript"></script>
+<!-- map file should be included after ammap.js -->
+<script src="../ammap/maps/js/worldLow.js" type="text/javascript"></script> 
+<script type="text/javascript">
+                    
+	// add all your code to this method, as this will ensure that page is loaded
+	AmCharts.ready(function() {
+	    // create AmMap object
+	    var map = new AmCharts.AmMap();
+	    // set path to images
+	    map.pathToImages = "../ammap/images/";
+		    
+	    /* create data provider object
+	    mapVar tells the map name of the variable of the map data. You have to
+	    view source of the map file you included in order to find the name of the 
+	    variable - it's the very first line after commented lines.
+	     
+	    getAreasFromMap indicates that amMap should read all the areas available
+	    in the map data and treat them as they are included in your data provider.
+	    in case you don't set it to true, all the areas except listed in data
+	    provider will be treated as unlisted.
+	    */
+	    var dataProvider = {
+		    mapVar: AmCharts.maps.worldLow,
+		    getAreasFromMap:true                    
+    	}; 
+    	// pass data provider to the map object
+    	map.dataProvider = dataProvider;
+			
+	    /* create areas settings
+	     * autoZoom set to true means that the map will zoom-in when clicked on the area
+	     * selectedColor indicates color of the clicked area.
+	     */
+	    map.areasSettings = {
+    		autoZoom: true,
+	    	selectedColor: "#BB8800",
+	    	color: "#006600",
+	    	outlineThickness: 0.1,
+	    	rollOverOutlineColor: "#BB8800",
+	    	rollOverColor: "#004400"
+		};
+			
+
+			
+		// write the map to container div
+		map.write("mapdiv");               
+			    
+	});
+            
+</script>

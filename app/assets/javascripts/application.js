@@ -14,15 +14,8 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
-$('.map_container').each(function(){
-	var row = $(this);
-	row.className + " reset-img-max-width"
-	}); 
-$('.gmaps4rails_map').each(function(){
-	var row = $(this);
-	row.className + " reset-img-max-width"
-	}); 
-$('.bing_map').each(function(){
-	var row = $(this);
-	row.className + " reset-img-max-width"
-	}); 
+//= require gmaps4rails/gmaps4rails.base
+//= require gmaps4rails/gmaps4rails.bing
+//= require gmaps4rails/gmaps4rails.googlemaps
+//= require gmaps4rails/gmaps4rails.mapquest
+//= require gmaps4rails/gmaps4rails.openlayers
