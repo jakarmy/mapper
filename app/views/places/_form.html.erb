@@ -31,10 +31,6 @@
     <%= f.label :image %><br />
     <%= f.text_field :image %>
   </div>
-  <div class="field">
-    <%= f.label :gmaps %><br />
-    <%= f.check_box :gmaps %>
-  </div>
   <%= hidden_field_tag 'trip', @trip.id %>
   <div class="actions">
     <%= f.submit %>

@@ -4,12 +4,12 @@ class PlacesController < ApplicationController
   def index
     @places = Place.all
 
-    @json = Place.all.to_gmaps4rails do |place, marker|
-      marker.title   place.name
-      marker.infowindow "<img src='#{place.image}'><h2>#{place.name}</h2><body>#{place.address}</body>"
-      marker.sidebar "<span>#{place.name}</span>"
-      marker.json({ :id => place.id})
-    end
+    # @json = Place.all.to_gmaps4rails do |place, marker|
+    #   marker.title   place.name
+    #   marker.infowindow "<img src='#{place.image}'><h2>#{place.name}</h2><body>#{place.address}</body>"
+    #   marker.sidebar "<span>#{place.name}</span>"
+    #   marker.json({ :id => place.id})
+    # end
 
     respond_to do |format|
       format.html # index.html.erb

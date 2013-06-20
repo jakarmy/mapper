@@ -14,7 +14,6 @@ group :production do
 end
 
 gem 'execjs'
-gem 'gmaps4rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
