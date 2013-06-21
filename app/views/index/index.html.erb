@@ -8,11 +8,18 @@
 				<div class="pure-g-r">
 
 				  <!-- We obtain the images from the trip we need -->
-				  <% images =  Array.new %>
+				  <% images =  Array.new 
+					should_placehold = false
+					%>
 				  <% recommended_trip.places.each do |place| %>
 				  	  <% images << place.images %>
 				  <% end %>
-				  <% shown_images = images.sample.sample(3) %>
+				  <% if images.count == 0
+				  		should_placehold = true
+				  		shown_images = Array.new
+				   	else 
+				   		shown_images = images.sample.sample(3) 
+				   	end%>
 					<% if shown_images.count > 0 %>
 							 <!-- We just chose 3 as the limit for the images to display -->
 							 <% counter = 0 %>
@@ -30,7 +37,10 @@
 			      				 		<% end %>
 								 </div>
 							 <% end %>
-					<% else %>
+					<% else 
+					should_placehold = true
+					end%>
+					<% if should_placehold %>
 						<div class="pure-u-1 photo-box span12 no-space" id = "recommended">
 				            <%= link_to image_tag(recommended_trip.cover_image_url), recommended_trip %>
 				            <aside class="photo-box-caption">
