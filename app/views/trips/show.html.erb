@@ -1,4 +1,4 @@
-<h2><%= @trip.name %> </h2>
+<h2> </h2>
 <% 
 if (@logged_user.trips.include? @trip) 
 	has_map = true
@@ -26,32 +26,21 @@ end
                     
 	// add all your code to this method, as this will ensure that page is loaded
 	AmCharts.ready(function() {
+// svg path for plane icon
+var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+
+
+
 	    // create AmMap object
 	    var map = new AmCharts.AmMap();
 	    // set path to images
 	    map.pathToImages = "../ammap/images/";
-		    
-	    /* create data provider object
-	    mapVar tells the map name of the variable of the map data. You have to
-	    view source of the map file you included in order to find the name of the 
-	    variable - it's the very first line after commented lines.
-	     
-	    getAreasFromMap indicates that amMap should read all the areas available
-	    in the map data and treat them as they are included in your data provider.
-	    in case you don't set it to true, all the areas except listed in data
-	    provider will be treated as unlisted.
-	    */
+
 	    var dataProvider = {
 		    mapVar: AmCharts.maps.worldLow,
 		    getAreasFromMap:true                    
     	}; 
-    	// pass data provider to the map object
-    	map.dataProvider = dataProvider;
-			
-	    /* create areas settings
-	     * autoZoom set to true means that the map will zoom-in when clicked on the area
-	     * selectedColor indicates color of the clicked area.
-	     */
+
 	    map.areasSettings = {
     		autoZoom: true,
 	    	selectedColor: "#BB8800",
@@ -61,8 +50,45 @@ end
 	    	rollOverColor: "#004400"
 		};
 			
+    map.imagesSettings = {
+        color: "#FFFFFF",
+        rollOverColor: "#AAAAAA",
+        selectedColor: "#000000",
+        		alpha: 128,
+    };
 
-			
+    // // LONDON
+    // var london = {
+    //     id: "london",
+    //     color: "#000000",
+    //     svgPath: targetSVG,
+    //     title: "London",
+    //     latitude: 51.5002,
+    //     longitude: -0.1262,
+    //     scale: 1.5,
+    //     zoomLevel: 2.74,
+    //     zoomLongitude: -20.1341,
+    //     zoomLatitude: 49.1712,
+ 
+
+    // cities
+    var cities = [
+    	<% @trip.places.each do |place| %>
+    		{
+    			id:"<%=place.name%>",
+        		color: '#' + Math.random().toString(16).substring(4),
+        		svgPath: targetSVG,
+        		title: "<%=place.name%> mas datos para colocar en \neste texto de loren ipsum dolor sit amet",
+        		latitude:<%=place.latitude%>,
+        		longitude:<%=place.longitude%>,
+        		scale: 1.5,
+        		zoomLevel: 2,
+    		},
+    	<% end %>
+    	];
+    dataProvider.images = cities;
+    	// pass data provider to the map object
+    	map.dataProvider = dataProvider;
 		// write the map to container div
 		map.write("mapdiv");               
 			    
