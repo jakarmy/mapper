@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130620234247) do
+ActiveRecord::Schema.define(:version => 20130621004016) do
 
   create_table "images", :force => true do |t|
     t.string   "url"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20130620234247) do
     t.string   "salt"
     t.string   "profile"
     t.string   "profile_picture_url"
+    t.string   "image_url"
   end
 
 end

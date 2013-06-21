@@ -1,4 +1,4 @@
-<h2><%= @trip.name %> </h2>
+<!-- We want to know if the user is part of the trip -->
 <% 
 if (@logged_user.trips.include? @trip) 
 	has_map = true
@@ -6,11 +6,32 @@ else
 	has_map = false
 end
 %>
+
+<div>
+	<h2><%= @trip.name %> </h2>
+	<% if has_map %>
+		<div class="trip_users">
+			<% @trip.users.each do |user| %>
+				<div id="user_frame">
+					<%= image_tag(user.image_url, :size => "40x40")%>
+					<%= user.name %> <%= user.lastname %>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+
 <% if has_map %>
-<%= link_to 'New Place', new_trip_place_path(@trip) %>
+<div>
+	<%= link_to 'New Place', new_trip_place_path(@trip) %>
+</div>
 <% end %>
 
-        <div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>     
+<br></br>
+
+<!-- Here, we display the map -->
+<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;">
+
 
 <% if has_map %>
 <%= form_tag("/trips/invite/#{@trip.id}", :method => "post") do -%>
