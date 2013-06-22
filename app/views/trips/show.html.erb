@@ -7,6 +7,7 @@ else
 end
 %>
 
+<!-- Here we show the users that share this map -->
 <div>
 	<h2><%= @trip.name %> </h2>
 	<% if has_map %>
@@ -30,7 +31,7 @@ end
 <br></br>
 
 <!-- Here, we display the map -->
-<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"> </div>
+<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>
 
 <div id="trip_pictures"></div> 
 
@@ -131,7 +132,22 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
     	// pass data provider to the map object
     	map.dataProvider = dataProvider;
 		// write the map to container div
-		map.write("mapdiv");               
+		map.write("mapdiv");
+
+        //<form name='prompt_box' onsubmit='changeTripName()'> Name your Trip: <input type='text' name='name'><br><input type='submit' value='Submit'></form>
+
+        <% if has_map && @trip.name == "NEW_TRIP" %>
+        function changeTripName(){
+                alert("OMG");
+    //             $.ajax({
+    //                 type: 'POST',
+    //                 url: "/trips/"+ <%= @trip.id %> +"/update/",
+    //                 data: {"name" : document.forms['prompt_box']['name'].value},
+    //                 success: tripNameChanged
+    // });
+            }
+            $('#application_main').append("<div id='prompt_box'><input type='text' name='name' id='trip_name'></input><input type='button' onclick='changeTripName();'>Change Name</input><br></div>");
+        <% end %>
 			    
 	});
             

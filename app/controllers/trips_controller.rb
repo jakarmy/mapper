@@ -35,12 +35,7 @@ class TripsController < ApplicationController
   # GET /trips/new
   # GET /trips/new.json
   def new
-    @trip = Trip.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @trip }
-    end
+    create
   end
 
   # GET /trips/1/edit
@@ -52,11 +47,12 @@ class TripsController < ApplicationController
   # POST /trips.json
   def create
     @trip = Trip.new(params[:trip])
+    @trip.name = "NEW_TRIP"
 
     respond_to do |format|
       if @trip.save
         @logged_user.trips << @trip
-        format.html { redirect_to @trip, notice: 'Trip was successfully created.' }
+        format.html { redirect_to @trip, notice: 'Trip was successfully created.', new_trip: true }
         format.json { render json: @trip, status: :created, location: @trip }
       else
         format.html { render action: "new" }
@@ -69,9 +65,17 @@ class TripsController < ApplicationController
   # PUT /trips/1.json
   def update
     @trip = Trip.find(params[:id])
-
+    puts params
+    
+    if @logged_user.trips.include? @trip
+      name_hash = Hash.new
+      unless params.has_key? :trip
+        puts "No Params"
+        name_hash[:name] = params[:name]
+        @trip.update_attributes(name_hash)
+      end
     respond_to do |format|
-      if @trip.update_attributes(params[:trip])
+      if @trip.update_attributes(params[:trip]) || @trip.update_attributes(name_hash)
         format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
         format.json { head :no_content }
       else
@@ -80,6 +84,7 @@ class TripsController < ApplicationController
       end
     end
   end
+end
 
   # DELETE /trips/1
   # DELETE /trips/1.json
