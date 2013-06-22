@@ -1,10 +1,9 @@
 <!-- The first part of the profile view where we display the profile picture and the trips the person has -->
-<div class="profile_container" id="profile">
+<div class="profile_container span12" id="profile">
   <div id="profile_image">
-    <%= image_tag(@user.image_url, :size => "100x100") %>
+    <%= image_tag(@user.image_url, :size => "200x200") %>
   </div>
-  <div id="profile_trips_map">
-  </div>
+    <div id="mapdiv"></div>  
 </div>
 
 <!-- Here we display basic information like name and things the person likes -->

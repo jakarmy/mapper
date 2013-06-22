@@ -30,7 +30,7 @@ def login
 		return
 	end
 	session[:token] = user.generateToken
-	redirect_to session[:original_url]
+	redirect_to root_path
   end
 
 def logout
