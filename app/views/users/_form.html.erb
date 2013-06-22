@@ -2,7 +2,10 @@
   <div class="control-group">
     <%= f.label :image_url, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :image_url, :class => 'text_field' %>
+      <%= f.text_field :image_url, :class => 'text_field', :id => "image_url_text_field"%>
+    </div>
+    <div id="image_preview" class= "boxed">
+        <%= image_tag("/assets/default_avatar.png", :size => "60x60")%>
     </div>
   </div>
   <div class="control-group">
@@ -27,12 +30,6 @@
     <%= f.label "Password", :class => 'control-label' %>
     <div class="controls">
       <%= f.password_field :hash_password, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :profile, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :profile, :class => 'text_field' %>
     </div>
   </div>
 
