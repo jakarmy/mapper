@@ -2,9 +2,7 @@
 
 <div class="span9">
 <div class="profile_container" id="map" style="display: inline;">
-  <span id="profile_image">
     <%= image_tag(@user.image_url, :size => "200x200") %>
-  </span>
     <div id="mapdiv"></div> 
 </div>
 
@@ -18,8 +16,10 @@
   <div id="personal_interests">
     <h4>Interests</h4>
     <div class="separator"></div>
-    <% @user.interests.each do |interest| %>
-      <%= image_tag(interest.url, :size => "40x40", :alt => "#{interest.name}") %>
+    <% @user.interests.each_with_index do |interest,index| %>
+      <% if index<20 %>
+        <%= image_tag(interest.url, :size => "40x40", :alt => "#{interest.name}") %>
+      <% end %>
     <% end %>
   </div>  
 </div>

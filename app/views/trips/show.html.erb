@@ -9,7 +9,11 @@ end
 
 <!-- Here we show the users that share this map -->
 <div>
-	<h2><%= @trip.name %> </h2>
+    <h2 id='title_trip_name'>
+    <% if @trip.name!="NEW_TRIP" %>
+        <%= @trip.name %> 
+    <% end %>
+    </h2>
 	<% if has_map %>
 		<div class="trip_users">
 			<% @trip.users.each do |user| %>
@@ -134,19 +138,23 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
 		// write the map to container div
 		map.write("mapdiv");
 
-        //<form name='prompt_box' onsubmit='changeTripName()'> Name your Trip: <input type='text' name='name'><br><input type='submit' value='Submit'></form>
-
         <% if has_map && @trip.name == "NEW_TRIP" %>
-        function changeTripName(){
-                alert("OMG");
-    //             $.ajax({
-    //                 type: 'POST',
-    //                 url: "/trips/"+ <%= @trip.id %> +"/update/",
-    //                 data: {"name" : document.forms['prompt_box']['name'].value},
-    //                 success: tripNameChanged
-    // });
+            function tripNameChanged(name){
+                $('#prompt_box').hide();
+                $('#title_trip_name').text(name);
+
             }
-            $('#application_main').append("<div id='prompt_box'><input type='text' name='name' id='trip_name'></input><input type='button' onclick='changeTripName();'>Change Name</input><br></div>");
+
+            $('#application_main').append("<div id='prompt_box'><div id='name_change_form'><h2>Name your trip!</h2><input type='text' name='name' id='trip_name'></input></br><input class='button' type='button' id='trip_name_change_button' value='Change Name'></input></div></div>");
+            $('#trip_name_change_button').click(function(){
+                var name = $("#trip_name").val();
+                $.ajax({
+                    type: "PUT",
+                    url: "/trips/"+<%=@trip.id%>+".json",
+                    data: {'name' : name},
+                    success: tripNameChanged(name)
+                });
+            });
         <% end %>
 			    
 	});
