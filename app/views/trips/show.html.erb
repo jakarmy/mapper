@@ -30,8 +30,9 @@ end
 <br></br>
 
 <!-- Here, we display the map -->
-<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;">
+<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"> </div>
 
+<div id="trip_pictures"></div> 
 
 <% if has_map %>
 <%= form_tag("/trips/invite/#{@trip.id}", :method => "post") do -%>
@@ -70,6 +71,19 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
 	    	rollOverOutlineColor: "#BB8800",
 	    	rollOverColor: "#004400"
 		};
+
+        map.addListener("clickMapObject", function(event){
+        $("#trip_pictures").empty();
+        for (var i = 0; i < event.mapObject.customData.length; i++) {
+            $("#trip_pictures").append("<img src="+event.mapObject.customData[i]+" border=0 height=60px width=60px>");
+        };
+    });
+    //     map.clickMapObject = function(event){
+    //     $("#trip_pictures").empty();
+    //     for (var i = 0; i < event.customData.length; i++) {
+    //         $("#trip_pictures").append("<img src="+event.customData[i]+" border=0 height=60px width=60px>");
+    //     };
+    // }
 			
     map.imagesSettings = {
         color: "#FFFFFF",
@@ -93,10 +107,15 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
  
 
     // cities
-    var cities = [
+    var cities = [];
     	<% @trip.places.each do |place| %>
-    		{
-    			id:"<%=place.name%>",
+            var images = new Array();
+
+            <% place.images.each do |image| %>
+                images.push("<%= image.url %>");
+            <% end %>
+    		cities.push({
+    			id:"<%=place.id%>",
         		color: '#' + Math.random().toString(16).substring(4),
         		svgPath: targetSVG,
         		title: "<%=place.name%> mas datos para colocar en \neste texto de loren ipsum dolor sit amet",
@@ -104,9 +123,10 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
         		longitude:<%=place.longitude%>,
         		scale: 1.5,
         		zoomLevel: 2,
-    		},
+                customData: images,
+    		});
     	<% end %>
-    	];
+
     dataProvider.images = cities;
     	// pass data provider to the map object
     	map.dataProvider = dataProvider;

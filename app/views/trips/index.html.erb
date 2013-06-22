@@ -2,42 +2,57 @@
 
 <%= render "layouts/side_partial" %>
 
-<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>  
+<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>
+
+<div id="trip_pictures"></div>  
 
 <link rel="stylesheet" href="../ammap/ammap.css" type="text/css">        
 <script src="../ammap/ammap.js" type="text/javascript"></script>
 <!-- map file should be included after ammap.js -->
 <script src="../ammap/maps/js/worldLow.js" type="text/javascript"></script> 
 <script type="text/javascript">
-                    
-	// add all your code to this method, as this will ensure that page is loaded
-	AmCharts.ready(function() {
-	// svg path for plane icon
-	var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
 
-	// create AmMap object
-	var map = new AmCharts.AmMap();
-	// set path to images
-	map.pathToImages = "../ammap/images/";
-	var dataProvider = {
-		mapVar: AmCharts.maps.worldLow,
-		getAreasFromMap:true                    
-    }; 
+    AmCharts.ready(function() {
+    // svg path for plane icon
+    var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
 
-	map.areasSettings = {
-    	autoZoom: true,
-	   	selectedColor: "#BB8800",
-	   	color: "#006600",
-	   	outlineThickness: 0.1,
-	   	rollOverOutlineColor: "#BB8800",
-	   	rollOverColor: "#004400"
-	};
-			
+    // create AmMap object
+    var map = new AmCharts.AmMap();
+    // set path to images
+    map.pathToImages = "../ammap/images/";
+    var dataProvider = {
+        mapVar: AmCharts.maps.worldLow,
+        getAreasFromMap:true                    
+    };
+
+    
+    map.addListener("clickMapObject", function(event){
+        $("#trip_pictures").empty();
+        for (var i = 0; i < event.mapObject.customData.length; i++) {
+            $("#trip_pictures").append("<img src="+event.mapObject.customData[i]+" border=0 height=60px width=60px>");
+        };
+    });
+
+    // map.clickMapObject = function(event){
+    //     $("#trip_pictures").empty();
+    //     for (var i = 0; i < event.customData.length; i++) {
+    //         $("#trip_pictures").append("<img src="+event.customData[i]+" border=0 height=60px width=60px>");
+    //     };
+
+    map.areasSettings = {
+        autoZoom: true,
+        selectedColor: "#BB8800",
+        color: "#006600",
+        outlineThickness: 0.1,
+        rollOverOutlineColor: "#BB8800",
+        rollOverColor: "#004400"
+    };
+            
     map.imagesSettings = {
         color: "#FFFFFF",
         rollOverColor: "#AAAAAA",
         selectedColor: "#000000",
-    	alpha: 128,
+        alpha: 128,
     };
  
     var legend = {
@@ -53,25 +68,30 @@
     };
     // cities
     var cities = [];
-    	<% @trips.each do |trip| %>
-    		var trip_color = '#' + Math.random().toString(16).substring(4);
-    		legend.data.push({
-    			title: "<%= trip.name %>",
-    			color: trip_color
-    		});
-    		<% trip.places.each do |place| %>
-    		cities.push({
-    			id:"<%=place.name%>",
-        		color: trip_color,
-        		svgPath: targetSVG,
-        		title: "<%=place.name%>",
-        		latitude:<%=place.latitude%>,
-        		longitude:<%=place.longitude%>,
-        		scale: 1.5,
-        		zoomLevel: 2,
-    		});
-    		<% end %>
-    	<% end %>
+        <% @trips.each do |trip| %>
+            var trip_color = '#' + Math.random().toString(16).substring(4);
+            legend.data.push({
+                title: "<%= trip.name %>",
+                color: trip_color
+            });
+            <% trip.places.each do |place| %>
+            var images = new Array();
+            <% place.images.each do |image| %>
+                images.push("<%= image.url %>");
+            <% end %>
+            cities.push({
+                id:"<%=place.id%>",
+                color: trip_color,
+                svgPath: targetSVG,
+                title: "<%=place.name%>",
+                latitude:<%=place.latitude%>,
+                longitude:<%=place.longitude%>,
+                scale: 1.5,
+                zoomLevel: 2,
+                customData: images,
+            });
+            <% end %>
+        <% end %>
    
 
 
@@ -80,8 +100,8 @@
     // pass data provider to the map object
     map.dataProvider = dataProvider;
     map.addLegend(legend);
-	// write the map to container div
-	map.write("mapdiv");                   
-	});
+    // write the map to container div
+    map.write("mapdiv");                   
+    });
             
 </script>
