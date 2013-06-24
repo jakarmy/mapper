@@ -1,1 +1,1 @@
-Interests.create(name: "Skydiving", url: "interests/skydiving.jpg")
+Interest.create(name: "Skydiving", url: "interests/skydiving.jpg")
