@@ -7,6 +7,7 @@ Mapper::Application.routes.draw do
   match '/logout' => "login#logout"
   match '/trips/invite/:id' => "trips#invite", :as => :invite
   match '/users/match/:name' => "users#match", :as => :match_users
+  match '/places/search/:search' => "places#search", :as => :search_places
   
   resources :users
   resources :places
