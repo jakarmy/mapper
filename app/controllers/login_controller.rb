@@ -13,7 +13,7 @@ def login
 	user = User.find_by_email(user_name)
 		
 	if(user.nil?)
-		redirect_to :login, notice: 'bad dataaaa'
+		redirect_to :login, notice: 'We do not have this email registered. Create an account!'
 		return
 	end
 		
@@ -26,7 +26,7 @@ def login
 
 		
 	if(user.hash_password!=password)
-		redirect_to :login, notice: 'bad dataaaa'
+		redirect_to :login, notice: 'Incorrect Password'
 		return
 	end
 	session[:token] = user.generateToken
