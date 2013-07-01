@@ -161,6 +161,10 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
 		// write the map to container div
 		map.write("mapdiv");
 
+        $("#mapdiv").append('<div id = "search_box" style = "position:relative; top:-100%; right:-79.9%;"><%= text_field_tag 'search_bar', nil, :placeholder => 'Search for places', :size => '45' %></div>');
+
+        $("#search_bar").bind("keypress",searchPlaces);
+
         <% if has_map && @trip.name == "NEW_TRIP" %>
             function tripNameChanged(name){
                 $('#prompt_box').hide();

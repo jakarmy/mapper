@@ -17,6 +17,24 @@ function textEntered(){
 }
 }
 
+function searchPlaces(){
+	if (!($("#search_bar").val() == "")) {
+		$.ajax({
+        type: 'POST',
+        url: "/places/search/" + $("#search_bar").val() + ".json",
+		data: $("#search_bar").val(),
+        success: searchPlacesCallback
+    });
+	}
+}
+
+function searchPlacesCallback(data){
+
+	for (var i = 0; i < data.length; i++) {
+		console.log(data[i].name);
+	};
+}
+
 function textEnteredCallback(data){
 	
 	$("#invites_selected").html(data.html);

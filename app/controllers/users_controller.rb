@@ -87,12 +87,12 @@ skip_before_filter :check_token, only: [:new, :create]
     @Users = Array.new
 
     if !value.nil?
-
+      # This is a user's name
       if value.split.count>1
         User.find(:all, :conditions => ['name LIKE ? AND lastname LIKE ? ','%'+value.split[0]+'%','%'+value.split[1]+'%'], :limit => 10).each do |u|
           @Users << u
         end
-
+# This is an email address
       else
         User.find(:all, :conditions => ['email LIKE ? ', value+'%'],:limit => 10).each do |u|
           @Users << u
@@ -114,7 +114,6 @@ skip_before_filter :check_token, only: [:new, :create]
       format.json { 
         resp = Hash.new
         resp[:html] = render_to_string(:partial => 'suggested_users.html.erb', :layout => false, :locals => {:users => @Users}, :formats => [:html])
-        puts resp
         render :json => resp
       }
     end

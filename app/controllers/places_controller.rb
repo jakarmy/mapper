@@ -95,4 +95,34 @@ class PlacesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def search
+    search_string = params[:search]
+
+    @Places = Array.new
+
+    if !search_string.nil?
+    # First, we look for the exact results
+      Place.find(:all, :conditions => ['name LIKE ? ','%'+search_string+'%'], :limit => 10).each do |p|
+        @Places << p
+      end
+      # In this case we'll search for independant words
+      if @Places.count < 10
+        search_string.split.each do |value|
+          Place.find(:all, :conditions => ['name LIKE ? ','%'+value+'%'], :limit => 10).each do |p|
+            @Places << p
+          end
+        end
+      end
+    end
+
+    respond_to do |format|
+      format.json {
+        # resp = Hash.new
+        # resp[:json] = render_to_string(:layout => false, :locals => {:users => @Places}, :formats => [:json]) 
+        render :json => @Places
+      }
+    end
+
+  end
 end
