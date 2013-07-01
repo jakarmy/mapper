@@ -29,21 +29,40 @@ end
 <script type="text/javascript">
                     
 	// add all your code to this method, as this will ensure that page is loaded
+    
+    // create AmMap object
+    var map = new AmCharts.AmMap();
+
+    var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+
+    function searchPlacesCallback(data){
+        map.selectObject();
+            for (var i = 0; i < data.length; i++) {
+                map.selectedObject.images.push({
+                    id:data[i].id,
+                    color: '#' + Math.random().toString(16).substring(4),
+                    svgPath: targetSVG,
+                    title: data[i].name,
+                    latitude: data[i].latitude,
+                    longitude: data[i].longitude,
+                    scale: 1.5,
+                    zoomLevel: 2,
+                    //customData: attributes,
+                    });
+            }
+            map.validateData();
+        }
+
 	AmCharts.ready(function() {
-// svg path for plane icon
-var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
 
-
-
-	    // create AmMap object
-	    var map = new AmCharts.AmMap();
+    var dataProvider = {
+            mapVar: AmCharts.maps.worldLow,
+            getAreasFromMap:true                    
+        };
 	    // set path to images
 	    map.pathToImages = "../ammap/images/";
 
-	    var dataProvider = {
-		    mapVar: AmCharts.maps.worldLow,
-		    getAreasFromMap:true                    
-    	}; 
+	    
 
 	    map.areasSettings = {
     		autoZoom: true,
@@ -136,6 +155,7 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
         $("#mapdiv").append('<div id = "search_box" style = "position:relative; top:-100%; right:-79.9%;"><%= text_field_tag 'search_bar', nil, :placeholder => 'Search for places', :size => '45' %></div>');
 
         $("#search_bar").bind("keypress",searchPlaces);
+
 
         $("#mapdiv").append('<span id="title_trip_name"><h2><% if @trip.name!="NEW_TRIP" %><%= @trip.name %><% end %></h2></span>');
         $("#mapdiv").append('<span id="user_legend"><% if has_map %><div class="trip_users"><% @trip.users.each do |user| %><div id="user_frame"><%= image_tag(user.image_url, :size => "40x40")%><%= user.name %> <%= user.lastname %></div><% end %></div><% end %></span>');
