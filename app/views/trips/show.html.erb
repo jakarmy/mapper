@@ -6,34 +6,6 @@ else
 	has_map = false
 end
 %>
-
-<!-- Here we show the users that share this map -->
-<div>
-    <h2 id='title_trip_name'>
-    <% if @trip.name!="NEW_TRIP" %>
-        <%= @trip.name %> 
-    <% end %>
-    </h2>
-	<% if has_map %>
-		<div class="trip_users">
-			<% @trip.users.each do |user| %>
-				<div id="user_frame">
-					<%= image_tag(user.image_url, :size => "40x40")%>
-					<%= user.name %> <%= user.lastname %>
-				</div>
-			<% end %>
-		</div>
-	<% end %>
-</div>
-
-<% if has_map %>
-<div>
-	<%= link_to 'New Place', new_trip_place_path(@trip) %>
-</div>
-<% end %>
-
-<br></br>
-
 <!-- Here, we display the map -->
 <div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>
 
@@ -160,11 +132,12 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
     	map.dataProvider = dataProvider;
 		// write the map to container div
 		map.write("mapdiv");
-
-        <% if has_map && @trip.name == "NEW_TRIP" %>
+        $("#mapdiv").append('<span id="title_trip_name"><h2><% if @trip.name!="NEW_TRIP" %><%= @trip.name %><% end %></h2></span>');
+        $("#mapdiv").append('<span id="user_legend"><% if has_map %><div class="trip_users"><% @trip.users.each do |user| %><div id="user_frame"><%= image_tag(user.image_url, :size => "40x40")%><%= user.name %> <%= user.lastname %></div><% end %></div><% end %></span>');
+       <% if has_map && @trip.name == "NEW_TRIP" %>
             function tripNameChanged(name){
                 $('#prompt_box').hide();
-                $('#title_trip_name').text(name);
+                $('#title_trip_name').children().text(name);
 
             }
 
