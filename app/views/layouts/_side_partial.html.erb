@@ -48,7 +48,14 @@
 	</div>
 	<div class="separator">
 	</div>
+<% if !@has_map.nil? && @has_map%>
+<%= form_tag("/trips/invite/#{@trip.id}", :method => "post") do -%>
+</br></br>
+		<%= render "layouts/invite" %>
+<% end %>
+<% else %>
 	<div id="btn-holder">
 		<%= link_to "Create A Trip!", new_trip_path, class: "btn btn-success" %>
 	</div>
+	<% end %>
 </div>

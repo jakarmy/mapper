@@ -1,13 +1,5 @@
-<!-- We want to know if the user is part of the trip -->
-<% 
-if (@logged_user.trips.include? @trip) 
-	has_map = true
-else
-	has_map = false
-end
-%>
 <!-- Here, we display the map -->
-<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>
+<div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 600px;"></div>
 
 <div id="places_about">
     <div id="places_pictures">
@@ -16,11 +8,6 @@ end
     </div>
 </div> 
 
-<% if has_map %>
-<%= form_tag("/trips/invite/#{@trip.id}", :method => "post") do -%>
-		<%= render "layouts/invite" %>
-<% end -%>
-<% end %>
 
 <link rel="stylesheet" href="../ammap/ammap.css" type="text/css">        
 <script src="../ammap/ammap.js" type="text/javascript"></script>
@@ -133,8 +120,8 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
 		// write the map to container div
 		map.write("mapdiv");
         $("#mapdiv").append('<span id="title_trip_name"><h2><% if @trip.name!="NEW_TRIP" %><%= @trip.name %><% end %></h2></span>');
-        $("#mapdiv").append('<span id="user_legend"><% if has_map %><div class="trip_users"><% @trip.users.each do |user| %><div id="user_frame"><%= image_tag(user.image_url, :size => "40x40")%><%= user.name %> <%= user.lastname %></div><% end %></div><% end %></span>');
-       <% if has_map && @trip.name == "NEW_TRIP" %>
+        $("#mapdiv").append('<span id="user_legend"><% if @has_map %><div class="trip_users"><% @trip.users.each do |user| %><div id="user_frame"><%= image_tag(user.image_url, :size => "40x40")%><%= user.name %> <%= user.lastname %></div><% end %></div><% end %></span>');
+       <% if @has_map && @trip.name == "NEW_TRIP" %>
             function tripNameChanged(name){
                 $('#prompt_box').hide();
                 $('#title_trip_name').children().text(name);

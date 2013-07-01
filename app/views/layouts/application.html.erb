@@ -58,6 +58,9 @@
       </div>
     </div>
 
+        <div style="postion: absolute; top:100px; left:100px;">
+          <%= bootstrap_flash %>
+        </div>
     <div class="container-fluid no-space">
       <div class="row-fluid">
         <div class="span2">
@@ -66,7 +69,7 @@
           <% end %>
         </div>
         <div class="span10 offset2" id="application_main">
-          <%= bootstrap_flash %>
+
           <%= yield %>
         </div>
       </div><!--/row-->

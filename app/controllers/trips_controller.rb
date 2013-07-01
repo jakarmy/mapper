@@ -18,14 +18,11 @@ class TripsController < ApplicationController
 
     @trip = Trip.find(params[:id])
     @places = @trip.places
-
-    # @json = @places.to_gmaps4rails do |place, marker|
-    #   marker.title   place.name
-    #   marker.infowindow "<img src='#{place.image}'><h2>#{place.name}</h2><body>#{place.address}</body>"
-    #   marker.sidebar "<span>#{place.name}</span>"
-    #   marker.json({ :id => place.id})
-    # end
-
+    @has_map = false
+    if (@logged_user.trips.include? @trip) 
+      @has_map = true
+      @invite = true;
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @trip }
@@ -113,6 +110,10 @@ end
 
     @user_ids = params[:invited]
     @users = Array.new
+    unless params.has_key?(:invited)
+      redirect_to @trip, :notice => "No users selected for invites"
+      return
+    end
     @user_ids.each do |user_id|
       @users << User.find(user_id)
     end
@@ -120,8 +121,8 @@ end
     
     unless @users.count > 0 || @users_mails.size > 0
       respond_to do |format|
-        format.html { redirect_to @trip, :notice => "No tienes permiso para acceder aqui!" }
-        format.json { render :json => {:ok => false, :notice => "No tienes permiso para acceder aqui!"} }
+        format.html { redirect_to @trip, :notice => "Not enough permissions!" }
+        format.json { render :json => {:ok => false, :notice => "Not enough permissions!"} }
       end
       return
     end
@@ -132,17 +133,6 @@ end
           user.trips << @trip
           user.save
         end
-          #invite = Invite.new
-#          invite.user_id = user
-#          invite.gathering_id = @gathering.id
-#          invite.creator = false
-#          invite.organizer = false
-#          invite.assist = 0
-#          invite.save
-          
-          #mail_params = {:user => User.find(user) , :gathering => @gathering}
-
-          #Emailer.event_invite_email(mail_params).deliver
       end
     end
     
@@ -185,7 +175,7 @@ end
     end
   end
     respond_to do |format|
-      format.html { redirect_to @trip, :notice => "Has invitado con exito!" }
+      format.html { redirect_to @trip, :notice => "You have invited succesfully" }
       format.json
     end
   end
