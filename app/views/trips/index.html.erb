@@ -27,10 +27,12 @@
 
     
     map.addListener("clickMapObject", function(event){
-        $("#trip_pictures").empty();
-        for (var i = 0; i < event.mapObject.customData.length; i++) {
-            $("#trip_pictures").append("<img src="+event.mapObject.customData[i]+" border=0 height=60px width=60px>");
-        };
+        //For now, we'll only redirect to that trip. We should make it a two step, where 
+        window.location.replace("<%= trips_path %>/" + event.mapObject.id);
+        // $("#trip_pictures").empty();
+        // for (var i = 0; i < event.mapObject.customData.length; i++) {
+        //     $("#trip_pictures").append("<img src="+event.mapObject.customData[i]+" border=0 height=60px width=60px>");
+        // };
     });
 
     // map.clickMapObject = function(event){
@@ -70,27 +72,52 @@
     var cities = [];
         <% @trips.each do |trip| %>
             var trip_color = '#' + Math.random().toString(16).substring(4);
+            <% lat_avg = 0 %>
+            <% long_avg = 0 %>
             legend.data.push({
                 title: "<%= trip.name %>",
                 color: trip_color
             });
-            <% trip.places.each do |place| %>
-            var images = new Array();
-            <% place.images.each do |image| %>
-                images.push("<%= image.url %>");
-            <% end %>
+            <% trip.places.each do |place|
+                lat_avg = lat_avg +  place.latitude
+                long_avg = long_avg +  place.longitude
+             end
+            if trip.places.count > 0
+                lat_avg = lat_avg /  trip.places.count
+                long_avg = long_avg / trip.places.count
+            end %>
+
             cities.push({
-                id:"<%=place.id%>",
-                color: trip_color,
-                svgPath: targetSVG,
-                title: "<%=place.name%>",
-                latitude:<%=place.latitude%>,
-                longitude:<%=place.longitude%>,
-                scale: 1.5,
-                zoomLevel: 2,
-                customData: images,
-            });
-            <% end %>
+                    id:"<%=trip.id%>",
+                    color: trip_color,
+                    svgPath: targetSVG,
+                    title: "<%=trip.name%>",
+                    latitude:<%= lat_avg%>,
+                    longitude:<%= long_avg %>,
+                    scale: 1.5,
+                    zoomLevel: 2,
+                    //customData: images,
+                });
+
+
+            // <% trip.places.each do |place| %>
+            //     var images = new Array();
+            //     var
+            //     <% place.images.each do |image| %>
+            //         images.push("<%= image.url %>");
+            //     <% end %>
+            //     cities.push({
+            //         id:"<%=place.id%>",
+            //         color: trip_color,
+            //         svgPath: targetSVG,
+            //         title: "<%=place.name%>",
+            //         latitude:<%=place.latitude%>,
+            //         longitude:<%=place.longitude%>,
+            //         scale: 1.5,
+            //         zoomLevel: 2,
+            //         customData: images,
+            //     });
+            // <% end %>
         <% end %>
    
 
