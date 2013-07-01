@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130622202003) do
+ActiveRecord::Schema.define(:version => 20130701163556) do
 
   create_table "images", :force => true do |t|
     t.string   "url"
@@ -42,9 +42,10 @@ ActiveRecord::Schema.define(:version => 20130622202003) do
     t.string   "address"
     t.float    "longitude"
     t.float    "latitude"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "image"
+    t.text     "description"
   end
 
   create_table "places_trips", :id => false, :force => true do |t|
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20130622202003) do
     t.string   "cover_image_url"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.text     "description"
   end
 
   create_table "trips_users", :id => false, :force => true do |t|

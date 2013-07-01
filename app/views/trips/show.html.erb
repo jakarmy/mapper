@@ -37,7 +37,12 @@ end
 <!-- Here, we display the map -->
 <div id="mapdiv" style="width: 100%; background-color:#EEEEEE; height: 500px;"></div>
 
-<div id="trip_pictures"></div> 
+<div id="places_about">
+    <div id="places_pictures">
+    </div>
+    <div id="places_description">
+    </div>
+</div> 
 
 <% if has_map %>
 <%= form_tag("/trips/invite/#{@trip.id}", :method => "post") do -%>
@@ -78,10 +83,27 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
 		};
 
         map.addListener("clickMapObject", function(event){
-        $("#trip_pictures").empty();
-        for (var i = 0; i < event.mapObject.customData.length; i++) {
-            $("#trip_pictures").append("<img src="+event.mapObject.customData[i]+" border=0 height=60px width=60px>");
-        };
+        
+            var attributes = event.mapObject.customData;
+            var pictures = event.mapObject.customData.pictures;
+            var description = event.mapObject.customData.description;
+            var name = event.mapObject.customData.name;
+
+            //We first iterate for the pictures, showing only 6 of them
+            var length = pictures.length;
+
+            $("#places_pictures").empty();
+
+            if (length > 6) {
+                length = 6;
+            };
+            for (var i = 0; i < length; i++) {
+                $("#places_pictures").append("<img src="+pictures[i]+" border=0 height=150px width=150px>");
+            };
+
+            $("#places_description").empty();
+            $("#places_description").append("<h3 style='color:white;'>"+ name +"</h3><p style='color:white;>"+ description +"</p>");
+
     });
     //     map.clickMapObject = function(event){
     //     $("#trip_pictures").empty();
@@ -119,6 +141,7 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
             <% place.images.each do |image| %>
                 images.push("<%= image.url %>");
             <% end %>
+            var attributes = {'pictures':images, 'name':"<%=place.name%>", 'description':"<%=place.description%>"};
     		cities.push({
     			id:"<%=place.id%>",
         		color: '#' + Math.random().toString(16).substring(4),
@@ -128,7 +151,7 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
         		longitude:<%=place.longitude%>,
         		scale: 1.5,
         		zoomLevel: 2,
-                customData: images,
+                customData: attributes,
     		});
     	<% end %>
 
