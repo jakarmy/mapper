@@ -42,14 +42,11 @@
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
           </a>
           <%= link_to 'Mapper', root_path, {:class => 'brand'} %>
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <% if @logged_user %>
-                <li><%= link_to 'Profile', @logged_user  %></li>
-                <li><%= link_to 'My Trips', trips_path  %></li>
                 <li><%= link_to 'Logout', logout_path  %></li>
               <% else %>
                 <li><%= link_to "Sign Up", "/users/new"  %></li>
@@ -63,10 +60,12 @@
 
     <div class="container-fluid no-space">
       <div class="row-fluid">
-        <div class="span3 fill">
+        <div class="span2">
+          <% unless @logged_user.nil? %>
           <%= render "layouts/side_partial" %>
+          <% end %>
         </div>
-        <div class="span9 offset3" id="application_main">
+        <div class="span10 offset2" id="application_main">
           <%= bootstrap_flash %>
           <%= yield %>
         </div>

@@ -1,0 +1,61 @@
+.clear { clear: both;}
+
+#sidebar{
+	background-color: #393735;
+	height: 1000px;
+}
+#profile_container{
+	background-color: #005c6f;
+	height: 200px;
+}
+#name_container{
+	color: black;
+	margin-top: 10px;
+	font-size: 140%;
+	font-style: bold;
+}
+.containerer {
+    width: 60%;
+    height: 150px;
+}
+.containerer img.wide {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+}
+.containerer img.tall {
+    max-height: 100%;
+    max-width: 100%;
+    height: 100%;
+}​
+.menu_element{
+	height: 40px;
+}
+.link_text{
+	color: white;
+	font-style: bold;
+	font-size: 120%;
+	float: left;
+	margin-left: 30px;
+	height: 40px;
+	line-height: 40px;
+}
+.menu_element:hover{
+	background-color: #ababab;
+	color: #373737;
+}
+.color_handle{
+	width: 2%;
+	height: 40px;
+}
+.separator{
+	height: 2px;
+	width: 100%;
+	background-color: #9d9d9c;
+}
+#btn-holder{
+	padding-top: 30px;
+	padding-left: 25%;
+	width: 100%;
+	height: 50px;
+}

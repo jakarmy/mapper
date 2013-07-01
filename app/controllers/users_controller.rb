@@ -5,10 +5,7 @@ skip_before_filter :check_token, only: [:new, :create]
 
   def index
     @user = @logged_user
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
-    end
+    redirect_to @user
   end
 
   # GET /users/1

@@ -1,1 +1,54 @@
 <%= stylesheet_link_tag "side_menu" %>
+<div id="sidebar">
+	<div id="profile_container">
+		<div class="containerer">
+			<img src="<%= @logged_user.image_url%>"/>
+			<div id="name_container">
+				<%=@logged_user.name+" "+@logged_user.lastname %>
+			</div>
+		</div>
+	</div>
+	<div class="menu_element" id="profile_link">
+		<div class="link_text">
+			Profile
+		</div>
+		<div class="color_handle">
+		</div>
+		<div class"clear"></div>
+	</div>
+	<div class="separator">
+	</div>
+	<div class="menu_element" id="trips_link">
+		<div class="link_text">
+			Trips
+		</div>
+		<div class="color_handle">
+		</div>
+			<div class"clear"></div>
+	</div>
+	<div class="separator">
+	</div>
+	<div class="menu_element" id="friends_link">
+		<div class="link_text">
+			Friends
+		</div>
+		<div class="color_handle">
+		</div>
+			<div class"clear"></div>
+	</div>
+	<div class="separator">
+	</div>
+	<div class="menu_element" id="friends_link">
+		<div class="link_text">
+			Explore
+		</div>
+		<div class="color_handle">
+		</div>
+			<div class"clear"></div>
+	</div>
+	<div class="separator">
+	</div>
+	<div id="btn-holder">
+		<%= link_to "Create A Trip!", new_trip_path, class: "btn btn-success" %>
+	</div>
+</div>
