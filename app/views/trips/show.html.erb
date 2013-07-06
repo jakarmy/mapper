@@ -24,6 +24,46 @@
 
     var targetSVG = "M16,3.5c-4.142,0-7.5,3.358-7.5,7.5c0,4.143,7.5,18.121,7.5,18.121S23.5,15.143,23.5,11C23.5,6.858,20.143,3.5,16,3.5z M16,14.584c-1.979,0-3.584-1.604-3.584-3.584S14.021,7.416,16,7.416S19.584,9.021,19.584,11S17.979,14.584,16,14.584z";
 
+    function placeAddedToTrip(data){
+        map.selectObject();
+        data.customData.is_search_result = false;
+
+        // We obtain the pin that has been added and remove the search state, and make it part of the map
+
+        // for (var i = 0; i < mapImages.length; i++){
+        //     if (mapImages[i].id == data) {
+        //         mapImages[i].customData.is_search_result = false;
+        //     }
+        // }
+        map.validateData();
+
+        // Now, we have to remove all search results
+        var mapImages = map.selectedObject.images;
+        for (var k = 0; k < mapImages.length; k++){
+            place = mapImages[k];
+            if (place.customData['is_search_result']) {
+                var index = k;
+                mapImages.splice(index,1);
+            }
+        }
+        map.validateData();
+        
+    }
+
+    function placeDeletedFromTrip(data){
+        map.selectObject();
+        var mapImages = map.selectedObject.images;
+        for (var i = 0; i < mapImages.length; i++){
+            place = mapImages[i];
+            if (place.id == data) {
+                var index = i;
+                mapImages.splice(index,1);
+                break;
+            }
+        }
+        map.validateData();
+    }
+
     function searchPlacesCallback(data){
         map.selectObject();
 
@@ -104,7 +144,7 @@
 
             $("#places_description").empty();
             $("#places_description").append("<h3 style='color:white;'>"+ name +"</h3><p style='color:white;>"+ description +"</p>");
-
+            <% if (@logged_user.trips.include? @trip) %>
             $("#places_option").empty();
             if (attributes.is_search_result) {
                 $("#places_option").append("<button class='btn btn-success' type='button' id='add_place_button'>Add Place to Map</button>");
@@ -113,7 +153,7 @@
                     type: "PUT",
                     url: "/trips/add_place/"+<%=@trip.id%>+".json",
                     data: {'place_id' : event.mapObject.id},
-                    success: placeAddedToTrip(name)
+                    success: placeAddedToTrip(event.mapObject)
                     });
                 });
             }else{
@@ -123,10 +163,11 @@
                     type: "PUT",
                     url: "/trips/delete_place/"+<%=@trip.id%>+".json",
                     data: {'place_id' : event.mapObject.id},
-                    success: placeDeletedFromTrip(name)
+                    success: placeDeletedFromTrip(event.mapObject.id)
                     });
                 });
             }
+            <% end %>
 
     });
 		
@@ -178,10 +219,10 @@
 		// write the map to container div
 		map.write("mapdiv");
 
+        <% if (@logged_user.trips.include? @trip) %>
         $("#mapdiv").append('<div id = "search_box" style = "position:relative; top:-100%; right:-79.9%;"><%= text_field_tag 'search_bar', nil, :placeholder => 'Search for places', :size => '45' %></div>');
-
-        //$("#search_bar").bind("keypress",searchPlaces);
         $("#search_bar").keypress(searchPlaces);
+        <% end %>
 
 
         $("#mapdiv").append('<span id="title_trip_name"><h2><% if @trip.name!="NEW_TRIP" %><%= @trip.name %><% end %></h2></span>');

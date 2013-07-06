@@ -62,7 +62,6 @@ class TripsController < ApplicationController
   # PUT /trips/1.json
   def update
     @trip = Trip.find(params[:id])
-    puts params
     
     if @logged_user.trips.include? @trip
       name_hash = Hash.new
@@ -98,11 +97,15 @@ end
 
     @trip = Trip.find(params[:id])
     place = Place.find(params[:place_id])
-
+    if (!(@logged_user.trips.include? @trip))
+      format.html { redirect_to @trip, notice: 'You can not add places to this trip' }
+      return
+    end
     @trip.places << place
 
     if @trip.save
       respond_to do |format|
+        format.html { redirect_to @trip, notice: place.name + ' added' }
         format.json { render json: @trip }
       end
     else
@@ -116,11 +119,16 @@ end
 
     @trip = Trip.find(params[:id])
     place = Place.find(params[:place_id])
+    if (!(@logged_user.trips.include? @trip))
+      format.html { redirect_to @trip, notice: 'You can not delete places from this trip' }
+      return
+    end
 
     @trip.places.delete(place)
 
     if @trip.save
       respond_to do |format|
+        format.html { redirect_to @trip, notice: place.name + ' deleted' }
         format.json { render json: @trip }
       end
     else

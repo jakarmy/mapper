@@ -28,14 +28,6 @@ function searchPlaces(){
 	}
 }
 
-function placeAddedToTrip(data){
-	alert("Place Added" + data);
-}
-
-function placeDeletedFromTrip(data){
-	alert("Place Deleted" + data);
-}
-
 function textEnteredCallback(data){
 	
 	$("#invites_selected").html(data.html);
