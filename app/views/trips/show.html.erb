@@ -27,18 +27,12 @@
     function placeAddedToTrip(data){
         map.selectObject();
         data.customData.is_search_result = false;
-
-        // We obtain the pin that has been added and remove the search state, and make it part of the map
-
-        // for (var i = 0; i < mapImages.length; i++){
-        //     if (mapImages[i].id == data) {
-        //         mapImages[i].customData.is_search_result = false;
-        //     }
-        // }
         map.validateData();
 
         // Now, we have to remove all search results
-        var mapImages = map.selectedObject.images;
+        // var mapImages = map.selectedObject.images;
+
+        var mapImages = map.dataProvider.images;
         for (var k = 0; k < mapImages.length; k++){
             place = mapImages[k];
             if (place.customData['is_search_result']) {
@@ -47,12 +41,16 @@
             }
         }
         map.validateData();
-        
+
+        $("#places_pictures").empty();
+        $("#places_description").empty();
+        $("#places_option").empty();
     }
 
     function placeDeletedFromTrip(data){
         map.selectObject();
-        var mapImages = map.selectedObject.images;
+        //var mapImages = map.selectedObject.images;
+        var mapImages = map.dataProvider.images;
         for (var i = 0; i < mapImages.length; i++){
             place = mapImages[i];
             if (place.id == data) {
@@ -62,13 +60,17 @@
             }
         }
         map.validateData();
+
+        $("#places_pictures").empty();
+        $("#places_description").empty();
+        $("#places_option").empty();
     }
 
     function searchPlacesCallback(data){
         map.selectObject();
 
         // This is to remove previous search results when searching again
-        var mapImages = map.selectedObject.images;
+        var mapImages = map.dataProvider.images;
         for (var k = 0; k < mapImages.length; k++){
             place = mapImages[k];
             if (place.customData['is_search_result']) {
