@@ -100,6 +100,8 @@ class PlacesController < ApplicationController
     search_string = params[:search]
 
     @Places = Array.new
+    images = Hash.new
+    final_result = Hash.new
 
     if !search_string.nil?
     # First, we look for the exact results
@@ -116,11 +118,19 @@ class PlacesController < ApplicationController
       end
     end
 
+    @Places.each do |place|
+      # This is to quickly associate which set of images is related to which place
+      images[place.id] = place.images
+    end
+
+    final_result['places'] = @Places
+    final_result['images'] = images
+
     respond_to do |format|
       format.json {
         # resp = Hash.new
-        # resp[:json] = render_to_string(:layout => false, :locals => {:users => @Places}, :formats => [:json]) 
-        render :json => @Places
+        # resp[:json] = render_to_string(:layout => false, :locals => {:users => @Places}, :formats => [:json])
+        render :json => final_result
       }
     end
 

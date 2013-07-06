@@ -28,13 +28,6 @@ function searchPlaces(){
 	}
 }
 
-// function searchPlacesCallback(data){
-
-// 	for (var i = 0; i < data.length; i++) {
-// 		console.log(data[i].name);
-// 	};
-// }
-
 function textEnteredCallback(data){
 	
 	$("#invites_selected").html(data.html);

@@ -24,17 +24,28 @@
 
     function searchPlacesCallback(data){
         map.selectObject();
-            for (var i = 0; i < data.length; i++) {
+
+        var places = data['places'];
+        var images = data['images'];
+
+            for (var i = 0; i < places.length; i++) {
+
+                var images_urls = new Array();
+                var places_images = images[places[i].id];
+                for (var j = 0; j < places_images.length; j++){
+                    images_urls.push(places_images[j].url);
+                }
+                var attributes = {'pictures':images_urls, 'name':places[i].name, 'description':places[i].description};
                 map.selectedObject.images.push({
-                    id:data[i].id,
-                    color: '#' + Math.random().toString(16).substring(4),
+                    id:places[i].id,
+                    color: '#4273C2',
                     svgPath: targetSVG,
-                    title: data[i].name,
-                    latitude: data[i].latitude,
-                    longitude: data[i].longitude,
+                    title: places[i].name,
+                    latitude: places[i].latitude,
+                    longitude: places[i].longitude,
                     scale: 1.5,
                     zoomLevel: 2,
-                    //customData: attributes,
+                    customData: attributes,
                     });
             }
             map.validateData();
@@ -115,7 +126,6 @@
     var cities = [];
     	<% @trip.places.each do |place| %>
             var images = new Array();
-
             <% place.images.each do |image| %>
                 images.push("<%= image.url %>");
             <% end %>
