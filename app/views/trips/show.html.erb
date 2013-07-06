@@ -20,10 +20,20 @@
     // create AmMap object
     var map = new AmCharts.AmMap();
 
-    var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z M9,15.93 c-3.83,0-6.93-3.1-6.93-6.93S5.17,2.07,9,2.07s6.93,3.1,6.93,6.93S12.83,15.93,9,15.93 M12.5,9c0,1.933-1.567,3.5-3.5,3.5S5.5,10.933,5.5,9S7.067,5.5,9,5.5 S12.5,7.067,12.5,9z";
+    var targetSVG = "M16,3.5c-4.142,0-7.5,3.358-7.5,7.5c0,4.143,7.5,18.121,7.5,18.121S23.5,15.143,23.5,11C23.5,6.858,20.143,3.5,16,3.5z M16,14.584c-1.979,0-3.584-1.604-3.584-3.584S14.021,7.416,16,7.416S19.584,9.021,19.584,11S17.979,14.584,16,14.584z";
 
     function searchPlacesCallback(data){
         map.selectObject();
+
+        // This is to remove previous search results when searching again
+        var mapImages = map.selectedObject.images;
+        for (var k = 0; k < mapImages.length; k++){
+            place = mapImages[k];
+            if (place.customData['is_search_result']) {
+                var index = mapImages.indexOf(place);
+                mapImages.splice(index,1);
+            }
+        }
 
         var places = data['places'];
         var images = data['images'];
@@ -35,7 +45,7 @@
                 for (var j = 0; j < places_images.length; j++){
                     images_urls.push(places_images[j].url);
                 }
-                var attributes = {'pictures':images_urls, 'name':places[i].name, 'description':places[i].description};
+                var attributes = {'pictures':images_urls, 'name':places[i].name, 'description':places[i].description, 'is_search_result':true};
                 map.selectedObject.images.push({
                     id:places[i].id,
                     color: '#4273C2',
@@ -129,7 +139,7 @@
             <% place.images.each do |image| %>
                 images.push("<%= image.url %>");
             <% end %>
-            var attributes = {'pictures':images, 'name':"<%=place.name%>", 'description':"<%=place.description%>"};
+            var attributes = {'pictures':images, 'name':"<%=place.name%>", 'description':"<%=place.description%>", 'is_search_result':false};
     		cities.push({
     			id:"<%=place.id%>",
         		color: '#' + Math.random().toString(16).substring(4),
