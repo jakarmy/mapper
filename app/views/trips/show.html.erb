@@ -6,6 +6,8 @@
     </div>
     <div id="places_description">
     </div>
+    <div id="places_option">
+    </div>
 </div> 
 
 
@@ -103,14 +105,31 @@
             $("#places_description").empty();
             $("#places_description").append("<h3 style='color:white;'>"+ name +"</h3><p style='color:white;>"+ description +"</p>");
 
+            $("#places_option").empty();
+            if (attributes.is_search_result) {
+                $("#places_option").append("<button class='btn btn-success' type='button' id='add_place_button'>Add Place to Map</button>");
+                $("#places_option").click(function(){
+                    $.ajax({
+                    type: "PUT",
+                    url: "/trips/add_place/"+<%=@trip.id%>+".json",
+                    data: {'place_id' : event.mapObject.id},
+                    success: placeAddedToTrip(name)
+                    });
+                });
+            }else{
+                $("#places_option").append("<button class='btn btn-danger' type='button' id='add_place_button'>Remove Place from Map</button>");
+                $("#places_option").click(function(){
+                    $.ajax({
+                    type: "PUT",
+                    url: "/trips/delete_place/"+<%=@trip.id%>+".json",
+                    data: {'place_id' : event.mapObject.id},
+                    success: placeDeletedFromTrip(name)
+                    });
+                });
+            }
+
     });
-    //     map.clickMapObject = function(event){
-    //     $("#trip_pictures").empty();
-    //     for (var i = 0; i < event.customData.length; i++) {
-    //         $("#trip_pictures").append("<img src="+event.customData[i]+" border=0 height=60px width=60px>");
-    //     };
-    // }
-			
+		
     map.imagesSettings = {
         color: "#FFFFFF",
         rollOverColor: "#AAAAAA",
@@ -161,7 +180,8 @@
 
         $("#mapdiv").append('<div id = "search_box" style = "position:relative; top:-100%; right:-79.9%;"><%= text_field_tag 'search_bar', nil, :placeholder => 'Search for places', :size => '45' %></div>');
 
-        $("#search_bar").bind("keypress",searchPlaces);
+        //$("#search_bar").bind("keypress",searchPlaces);
+        $("#search_bar").keypress(searchPlaces);
 
 
         $("#mapdiv").append('<span id="title_trip_name"><h2><% if @trip.name!="NEW_TRIP" %><%= @trip.name %><% end %></h2></span>');

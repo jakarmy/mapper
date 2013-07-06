@@ -97,10 +97,36 @@ end
   def add_place
 
     @trip = Trip.find(params[:id])
+    place = Place.find(params[:place_id])
 
-    respond_to do |format|
-      format.html {redirect_to :new_place}
-      format.json { render json: @trip }
+    @trip.places << place
+
+    if @trip.save
+      respond_to do |format|
+        format.json { render json: @trip }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: @trip.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def delete_place
+
+    @trip = Trip.find(params[:id])
+    place = Place.find(params[:place_id])
+
+    @trip.places.delete(place)
+
+    if @trip.save
+      respond_to do |format|
+        format.json { render json: @trip }
+      end
+    else
+      respond_to do |format|
+        format.json { render json: @trip.errors, status: :unprocessable_entity }
+      end
     end
   end
 
