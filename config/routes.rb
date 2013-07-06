@@ -1,5 +1,9 @@
 Mapper::Application.routes.draw do
 
+  match 'feedbacks' => 'feedbacks#create', :as => :feedback
+
+  match 'feedbacks/new' => 'feedbacks#new', :as => :new_feedback
+
   root :to => 'index#index'
   
   match '/login' =>  "login#index", :as => :login
