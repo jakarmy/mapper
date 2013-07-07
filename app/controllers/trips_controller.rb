@@ -16,6 +16,11 @@ class TripsController < ApplicationController
   # GET /trips/1.json
   def show
 
+    if params.has_key?(:invite_id)
+      invite = Invitation.find_by_hash_id(params[:invite_id])
+      @logged_user.trips << invite.trip
+      @logged_user.save
+    end
     @trip = Trip.find(params[:id])
     @places = @trip.places
     @has_map = false
@@ -144,12 +149,14 @@ end
 
     @user_ids = params[:invited]
     @users = Array.new
-    unless params.has_key?(:invited)
+    if !params.has_key?(:invited) && !params.has_key?(:invitation_mail) && params[:invitation_mail].length > 0
       redirect_to @trip, :notice => "No users selected for invites"
       return
     end
-    @user_ids.each do |user_id|
-      @users << User.find(user_id)
+    unless @user_ids.nil?
+      @user_ids.each do |user_id|
+        @users << User.find(user_id)
+      end
     end
     @users_mails = params[:invitation_mail].gsub(/\s+/, "").split(",")
     
@@ -177,33 +184,15 @@ end
             unless user.trips.include? @trip
               user.trips << @trip
               user.save
-
-                            #invite = Invite.new
-#              invite.user_id = user.id
-#              invite.gathering_id = @gathering.id
-#              invite.creator = false
-#              invite.organizer = false
-#              invite.assist = 0
-#              invite.save
-
               #mail_params = {:user => user , :gathering => @gathering}
 
               #Emailer.event_invite_email(mail_params).deliver
             end
 
           else
-
             #Send Emails!!
-            
-            #pi = PendingInvites.new
-#            pi.invite_type = 1
-#            pi.invitation_id = @gathering.id
-#            pi.usermail = mail
-#            pi.save
-            
-            #mail_params = {:user_mail => mail , :gathering => @gathering}
-
-            #Emailer.event_invite_email(mail_params).deliver
+              invite = Invitation.new
+              invite.sendEmail(@trip,mail, @logged_user.name+" "+@logged_user.lastname)
         end
       end
     end

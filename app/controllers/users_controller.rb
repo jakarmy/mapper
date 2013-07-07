@@ -42,6 +42,10 @@ skip_before_filter :check_token, only: [:new, :create]
     session[:token] = @user.generateToken
     respond_to do |format|
       if @user.save
+        unless session[:original_url].nil?
+          redirect_to session[:original_url]
+          return
+        end
         format.html { redirect_to root_path, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else

@@ -1,0 +1,12 @@
+Dear new user,
+</br>
+</br>
+You're lucky today, you've got and invite from <%= @invitation.mail_from %>:
+</br>
+</br>
+You are hereby invited to Join Mapper and collaborate on <%= @invitation.mail_from %> 's trip!</br>
+Click the following link to sign up and join your friend!</br>
+</br>
+<%= trip_url(@invitation.trip, :only_path => false) %>/<%=@invitation.hash_id%>
+</br>
+</br>

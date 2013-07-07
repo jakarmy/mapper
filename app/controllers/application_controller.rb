@@ -12,11 +12,21 @@ class ApplicationController < ActionController::Base
 
       if(@logged_user==nil)
         session[:original_url] = request.url
-        redirect_to :login
+
+        if params.has_key?(:invite_id)
+          redirect_to :signup
+        else
+          redirect_to :login
+        end
       end
     else
         session[:original_url] = request.url
-        redirect_to :login
+        
+        if params.has_key?(:invite_id)
+          redirect_to :signup
+        else
+          redirect_to :login
+        end
     end
   end
 

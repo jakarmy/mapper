@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 			# Generamos Salt y encriptamos el password del nuevo usuario
 			self.salt = SecureRandom.hex(16) 
 			puts self.hash_password
+			unencripted_pass = self.hash_password
 			password = salt + self.hash_password
 
 			
@@ -40,8 +41,8 @@ class User < ActiveRecord::Base
 
 			self.hash_password = password
 			
-			# enviamos mail al usuario con su contraseñas
-			# UserMailer.welcome_email(self, unencripted_pass).deliver
+			#enviamos mail al usuario con su contraseñas
+			UserMailer.welcome_email(self, unencripted_pass).deliver
 	end
 
 end
