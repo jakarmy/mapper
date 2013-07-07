@@ -101,9 +101,17 @@ end
       format.html { redirect_to @trip, notice: 'You can not add places to this trip' }
       return
     end
+    puts "########### Places ###########"
+    puts "Place ID to be added: " + params[:place_id]
+    puts place
+    puts "########### Trip ###########"
+    puts "Trip Place Count Before Addition: " + @trip.places.count.to_s
+
     @trip.places << place
 
     if @trip.save
+      puts "########### Trip ###########"
+      puts "Trip Place Count Before Addition: " + @trip.places.count.to_s
       respond_to do |format|
         format.html { redirect_to @trip, notice: place.name + ' added' }
         format.json { render json: @trip }
@@ -123,10 +131,17 @@ end
       format.html { redirect_to @trip, notice: 'You can not delete places from this trip' }
       return
     end
+    puts "########### Places ###########"
+    puts "Place ID to be deleted: " + params[:place_id]
+    puts place
+    puts "########### Trip ###########"
+    puts "Trip Place Count Before Deletion: " + @trip.places.count.to_s
 
     @trip.places.delete(place)
 
     if @trip.save
+      puts "########### Trip ###########"
+      puts "Trip Place Count Before Deletion: " + @trip.places.count.to_s
       respond_to do |format|
         format.html { redirect_to @trip, notice: place.name + ' deleted' }
         format.json { render json: @trip }

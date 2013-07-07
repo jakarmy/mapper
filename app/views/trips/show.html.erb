@@ -26,30 +26,46 @@
 
     function placeAddedToTrip(data){
         map.selectObject();
-        data.customData.is_search_result = false;
+        // Here we modify the recently added object
+        var mapImages = map.dataProvider.images;
+
+        for (var i = 0; i < mapImages.length; i++){
+            place = mapImages[i];
+            if (place.id == data) {
+                place.customData.is_search_result = false;
+                place.color = '#990000';
+                break;
+            }
+        }
         map.validateData();
 
         // Now, we have to remove all search results
-        // var mapImages = map.selectedObject.images;
 
-        var mapImages = map.dataProvider.images;
-        for (var k = 0; k < mapImages.length; k++){
-            place = mapImages[k];
-            if (place.customData['is_search_result']) {
-                var index = k;
-                mapImages.splice(index,1);
+        var searchObjects = mapImages.filter(isSearchResult);
+
+        for (var searchObject in searchObjects){
+            for (var mapImage in mapImages){
+                if (searchObject.id == mapImage.id){
+                    var index = mapImages.indexOf(mapImage);
+                    mapImages.splice(index,1);
+                    break;
+                }
             }
         }
+        
         map.validateData();
 
         $("#places_pictures").empty();
         $("#places_description").empty();
         $("#places_option").empty();
     }
+    // This function allows us to get objects from an array that fulfill a certain condition
+    function isSearchResult(mapObject){
+        return mapObject.customData.is_search_result;
+    }
 
     function placeDeletedFromTrip(data){
         map.selectObject();
-        //var mapImages = map.selectedObject.images;
         var mapImages = map.dataProvider.images;
         for (var i = 0; i < mapImages.length; i++){
             place = mapImages[i];
@@ -155,7 +171,7 @@
                     type: "PUT",
                     url: "/trips/add_place/"+<%=@trip.id%>+".json",
                     data: {'place_id' : event.mapObject.id},
-                    success: placeAddedToTrip(event.mapObject)
+                    success: placeAddedToTrip(event.mapObject.id)
                     });
                 });
             }else{
@@ -179,19 +195,6 @@
         selectedColor: "#000000",
         		alpha: 128,
     };
-
-    // // LONDON
-    // var london = {
-    //     id: "london",
-    //     color: "#000000",
-    //     svgPath: targetSVG,
-    //     title: "London",
-    //     latitude: 51.5002,
-    //     longitude: -0.1262,
-    //     scale: 1.5,
-    //     zoomLevel: 2.74,
-    //     zoomLongitude: -20.1341,
-    //     zoomLatitude: 49.1712,
  
 
     // cities
@@ -204,7 +207,7 @@
             var attributes = {'pictures':images, 'name':"<%=place.name%>", 'description':"<%=place.description%>", 'is_search_result':false};
     		cities.push({
     			id:"<%=place.id%>",
-        		color: '#' + Math.random().toString(16).substring(4),
+        		color: '#990000',
         		svgPath: targetSVG,
         		title: "<%=place.name%>",
         		latitude:<%=place.latitude%>,

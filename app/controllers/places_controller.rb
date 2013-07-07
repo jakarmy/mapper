@@ -109,13 +109,13 @@ class PlacesController < ApplicationController
         @Places << p
       end
       # In this case we'll search for independant words
-      if @Places.count < 10
-        search_string.split.each do |value|
-          Place.find(:all, :conditions => ['name LIKE ? ','%'+value+'%'], :limit => 10).each do |p|
-            @Places << p
-          end
-        end
-      end
+      # if @Places.count < 10
+      #   search_string.split.each do |value|
+      #     Place.find(:all, :conditions => ['name LIKE ? ','%'+value+'%'], :limit => 10).each do |p|
+      #       @Places << p
+      #     end
+      #   end
+      # end
     end
 
     @Places.each do |place|
