@@ -1,6 +1,8 @@
 Mapper::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  #trip-mapper.herokuapp.com
+  Rails.application.routes.default_url_options[:host] = 'trip-mapper.herokuapp.com'
   # Code is not reloaded between requests
   config.cache_classes = true
 
