@@ -32,8 +32,8 @@
         for (var i = 0; i < mapImages.length; i++){
             place = mapImages[i];
             if (place.id == data) {
-                place.customData.is_search_result = false;
-                place.color = '#990000';
+                mapImages[i].customData.is_search_result = false;
+                mapImages[i].color = '#990000';
                 break;
             }
         }
@@ -52,7 +52,7 @@
                 }
             }
         }
-        
+
         map.validateData();
 
         $("#places_pictures").empty();
@@ -100,13 +100,20 @@
 
             for (var i = 0; i < places.length; i++) {
 
+                var isPlaceAlreadyOnMap = isSearchObjectAlreadyOnMap(places[i],mapImages);
+                console.log(isPlaceAlreadyOnMap);
+
+                if (isPlaceAlreadyOnMap){
+                    continue;
+                }
+
                 var images_urls = new Array();
                 var places_images = images[places[i].id];
                 for (var j = 0; j < places_images.length; j++){
                     images_urls.push(places_images[j].url);
                 }
                 var attributes = {'pictures':images_urls, 'name':places[i].name, 'description':places[i].description, 'is_search_result':true};
-                map.selectedObject.images.push({
+                mapImages.push({
                     id:places[i].id,
                     color: '#4273C2',
                     svgPath: targetSVG,
@@ -119,6 +126,18 @@
                     });
             }
             map.validateData();
+        }
+
+        function isSearchObjectAlreadyOnMap(searchObject, sourceArray){
+            console.log(searchObject);
+            console.log(sourceArray);
+            for (var k = 0; k < sourceArray.length; k++){
+                console.log(sourceArray[k]);
+                if (sourceArray[k].id == searchObject.id) {
+                    return true;
+                }
+            }
+            return false;
         }
 
 	AmCharts.ready(function() {
