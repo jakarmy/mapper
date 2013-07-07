@@ -17,9 +17,12 @@ class TripsController < ApplicationController
   def show
 
     if params.has_key?(:invite_id)
+      session[:original_url] = nil
       invite = Invitation.find_by_hash_id(params[:invite_id])
       @logged_user.trips << invite.trip
       @logged_user.save
+      redirect_to trip_path(Trip.find(params[:id]))
+      return
     end
     @trip = Trip.find(params[:id])
     @places = @trip.places
