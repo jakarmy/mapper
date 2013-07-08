@@ -8,7 +8,7 @@ class Invitation < ActiveRecord::Base
   def sendEmail(trip,email,from)
   	self.trip = trip
   	self.mail_to = email
-  	self.hash_id = SecureRandom.hex(128)
+  	self.hash_id = SecureRandom.hex(32)
     self.mail_from = from
   	self.save
   	InvitationMailer.invite(self).deliver
